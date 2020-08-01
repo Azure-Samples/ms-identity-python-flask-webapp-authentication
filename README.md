@@ -30,17 +30,20 @@ description: "This Sample demonstrates a Python Flask Webapp for logging in user
 
 ## Overview
 
+![Overview](./ReadmeFiles/sign-in.png)
+
 This Sample demonstrates a Python Flask Webapp for logging in users in your organization using Azure Active Directory.
 
-1. The Python Flask Webapp application uses the Microsoft Authentication Library (MSAL) to obtain a JWT ID token from Azure Active Directory (Azure AD):
-2. The access token is used to authenticate the user and log them in.
-
-![Overview](./ReadmeFiles/sign-in.png)
+1. The Python Flask Webapp application uses the Microsoft Authentication Library (MSAL) for Python to obtain an authorization code from Azure Active Directory (Azure AD)
+1. The code is sent back to AAD by the user's browser and exchanged for a JWT-encoded ID token
+1. The ID token is used to authenticate the user and log them in to the webapp, maintaining their logged-in status in the app session.
 
 ## Scenario
 
 - This sample shows how to build a Flask Web app that uses OpenID Connect to sign in users.
 - Users can only sign-in with their work and school accounts in their own organization.
+
+![Scenario](./ReadmeFiles/app.png)
 
 ## Contents
 
