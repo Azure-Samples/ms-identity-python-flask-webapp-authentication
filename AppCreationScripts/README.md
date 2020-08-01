@@ -19,9 +19,9 @@ products:
   - microsoft-identity-platform
   - azure-active-directory  
   - microsoft-graph-api
-description: "This sample demonstrates a Python and Flask Webapp with Jinja templates application calling a N/A that is secured using Azure Active Directory"
+description: "This sample demonstrates a Python Flask Webapp application calling a N/A that is secured using Azure Active Directory"
 ---
-# A React & Redux single-page application authorizing an ASP.NET Core Web API to call MS Graph API on its behalf using the MS Graph SDK
+# A Python Flask Webapp for logging in users in your organization with the Microsoft Identity platform
 
  1. [Overview](#overview)
  1. [Scenario](#scenario)
@@ -42,9 +42,9 @@ description: "This sample demonstrates a Python and Flask Webapp with Jinja temp
 
 ## Overview
 
-This sample demonstrates a Python and Flask Webapp with Jinja templates application calling a N/A that is secured using Azure Active Directory.
+This sample demonstrates a Python Flask Webapp application calling a N/A that is secured using Azure Active Directory.
 
-1. The client Python and Flask Webapp with Jinja templates application uses the Microsoft Authentication Library (MSAL) to obtain a JWT access token from Azure Active Directory (Azure AD):
+1. The client Python Flask Webapp application uses the Microsoft Authentication Library (MSAL) to obtain a JWT access token from Azure Active Directory (Azure AD):
 2. The access token is used as a bearer token to authenticate the user when calling the N/A.
 
 ![Overview](./ReadmeFiles/topology.png)
@@ -80,7 +80,7 @@ This sample demonstrates a Python and Flask Webapp with Jinja templates applicat
 From your shell or command line:
 
 ```console
-git clone https://github.com/Azure-Samples/ms-identity-python-flask-authentication.git
+git clone https://github.com/Azure-Samples/ms-identity-python-flask-webapp-authentication.git
 ```
 
 or download and extract the repository .zip file.
@@ -136,12 +136,12 @@ As a first step you'll need to:
 1. If your account is present in more than one Azure AD tenant, select your profile at the top right corner in the menu on top of the page, and then **switch directory**.
 
 
-### Register the client app (PythonAuthenticationSample)
+### Register the app app (PythonAuthenticationSampleMyOrg)
 
 1. Navigate to the Microsoft identity platform for developers [App registrations](https://go.microsoft.com/fwlink/?linkid=2083908) page.
 1. Select **New registration**.
 1. In the **Register an application page** that appears, enter your application's registration information:
-   - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `PythonAuthenticationSample`.
+   - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `PythonAuthenticationSampleMyOrg`.
    - Under **Supported account types**, select **Accounts in this organizational directory only**.
 
    - In the **Redirect URI (optional)** section, select **Web** in the combo-box and enter the following redirect URI: `http://localhost:5000/auth/redirect`.
@@ -151,20 +151,29 @@ As a first step you'll need to:
 
 1. Select **Save** to save your changes.
 
+1. In the app's registration screen, click on the **Certificates & secrets** blade in the left to open the page where we can generate secrets and upload certificates.
+1. In the **Client secrets** section, click on **New client secret**:
+   - Type a key description (for instance `app secret`),
+   - Select one of the available key durations (**In 1 year**, **In 2 years**, or **Never Expires**) as per your security concerns.
+   - The generated key value will be displayed when you click the **Add** button. Copy the generated value for use in the steps later.
+   - You'll need this key later in your code's configuration files. This key value will not be displayed again, and is not retrievable by any other means, so make sure to note it from the Azure portal before navigating to any other screen or blade.
 
 
-#### Configure the client app (PythonAuthenticationSample) to use your app registration
+
+#### Configure the app app (PythonAuthenticationSampleMyOrg) to use your app registration
 
 Open the project in your IDE to configure the code.
 
 > In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 
-1. Open the `ProfileSPA\src\utils\authConfig.js` file
+1. Open the `config.py` file
 
-1. Find the app key `Enter the Client Id (aka 'Application ID')` and replace the existing value with the application ID (clientId) of the `PythonAuthenticationSample` application copied from the Azure portal.
+1. Find the app key `default-value-enter-your-tenant-id-here` and replace the existing value with your Azure AD tenant ID.
 
-1. Find the app key `Enter the API scopes as declared in the app registration 'Expose an Api' blade in the form of 'api://{client_id}/.default'` and replace the existing value with service.Scope.
+1. Find the app key `default-value-enter-your-client-id-here` and replace the existing value with the application ID (clientId) of the `PythonAuthenticationSampleMyOrg` application copied from the Azure portal.
+
+1. Find the app key `default-value-enter-your-client-secret-here` and replace the existing value with the key you saved during the creation of the `PythonAuthenticationSampleMyOrg` app, in the Azure portal.
 
 ## Running the sample
 
@@ -195,10 +204,10 @@ There is one web project in this sample. To deploy it to **Azure App Services**,
 - update its client(s) to call the web site instead of the local environment.
 
 
-### Create and publish the `PythonAuthenticationSample` to an Azure Web Site
+### Create and publish the `PythonAuthenticationSampleMyOrg` to an Azure Web Site
 
 1. Sign in to the [Azure portal](https://portal.azure.com).
-1. Click `Create a resource` in the top left-hand corner, select **Web** --> **Web App**, and give your web site a name, for example, `PythonAuthenticationSample-contoso.azurewebsites.net`.
+1. Click `Create a resource` in the top left-hand corner, select **Web** --> **Web App**, and give your web site a name, for example, `PythonAuthenticationSampleMyOrg-contoso.azurewebsites.net`.
 1. Next, select the `Subscription`, `Resource Group`, `App service plan and Location`. `OS` will be **Windows** and `Publish` will be **Code**.
 1. Click `Create` and wait for the App Service to be created.
 1. Once you get the `Deployment succeeded` notification, then click on `Go to resource` to navigate to the newly created App service.
@@ -223,13 +232,13 @@ There is one web project in this sample. To deploy it to **Azure App Services**,
 // Python deployment...
 
 
-### Update the Azure AD app registration for `PythonAuthenticationSample`
+### Update the Azure AD app registration for `PythonAuthenticationSampleMyOrg`
 
 1. Navigate back to to the [Azure portal](https://portal.azure.com).
 In the left-hand navigation pane, select the **Azure Active Directory** service, and then select **App registrations (Preview)**.
-1. In the resulting screen, select the `PythonAuthenticationSample` application.
+1. In the resulting screen, select the `PythonAuthenticationSampleMyOrg` application.
 
-1. From the *Branding* menu, update the **Home page URL**, to the address of your service, for example [https://PythonAuthenticationSample-contoso.azurewebsites.net](https://PythonAuthenticationSample-contoso.azurewebsites.net). Save the configuration.
+1. From the *Branding* menu, update the **Home page URL**, to the address of your service, for example [https://PythonAuthenticationSampleMyOrg-contoso.azurewebsites.net](https://PythonAuthenticationSampleMyOrg-contoso.azurewebsites.net). Save the configuration.
 1. Add the same URL in the list of values of the *Authentication -> Redirect URIs* menu. If you have multiple redirect URIs, make sure that there a new entry using the App service's URI for each redirect URI.
 
 

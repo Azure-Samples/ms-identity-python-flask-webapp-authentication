@@ -1,0 +1,14 @@
+{% if auth_session.name %}
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.profile') }}">Hello {{ auth_user_claims.name }}!</a>
+        </li>
+        <li>
+            <a class="btn btn-warning" href="{{ url_for('auth.logout') }}">Logout</a>
+        </li>
+    </ul>
+{% else %}
+    <ul class="navbar navbar-nav navbar-right">
+        <li><a class="btn btn-success" href="{{ url_for('auth.login') }}">Login</a></li>
+    </ul>
+{% endif %}
