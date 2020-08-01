@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block banner_text %}
+    {% block title %}
+        Authentication: Use MSAL Python to sign in users in your own Azure Active Directory tenant
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <h5 class="card-header bg-primary">
+        {% block header%} {% endblock %}
+    </h5>
+    <div class="card-body">
+        <!-- <h5 class="card-title">
+        </h5> -->
+        <p class="card-text">
+            {% block text %} {% endblock %}
+        </p>
+        <!-- <div class="card-footer">
+        </div> -->
+    </div>
+</div>
+{% endblock %}
+
+{% block flash_messages %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+

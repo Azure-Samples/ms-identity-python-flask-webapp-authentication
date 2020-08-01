@@ -1,0 +1,44 @@
+{
+    "Sample": {
+      "Title": "A Python Flask Webapp to sign in users in your Azure AD tenant with the Microsoft Identity platform",
+      "Level": 100,
+      "Client": "Python Flask Webapp",
+      "Service": "N/A",
+      "RepositoryUrl": "ms-identity-python-flask-webapp-authentication",
+      "Endpoint": "AAD v2.0"
+    },
+    "AADApps": [
+      {
+        "Id": "webApp",
+        "Name": "WebApp_Python_Flask_Authentication_MyOrg",
+        "Kind": "WebApp",
+        "Audience": "AzureADMyOrg",
+        "PasswordCredentials": "Auto",
+        "AllowImplicitFlow": false,
+        "HomePage": "https://127.0.0.1:5000",
+        "ReplyUrls": "https://127.0.0.1:5000/auth/redirect",
+        "RequiredResourcesAccess": []
+      }
+    ],
+    "CodeConfiguration": [
+      {
+        "App": "webApp",
+        "SettingKind": "Replace",
+        "SettingFile": "\\..\\config.py",
+        "Mappings": [
+          {
+            "key": "default-value-enter-your-tenant-id-here",
+            "value": "$tenantId"
+          },
+          {
+            "key": "default-value-enter-your-client-id-here",
+            "value": "webApp.AppId"
+          },
+          {
+            "key": "default-value-enter-your-client-secret-here",
+            "value": ".AppKey"
+          }
+        ]
+      }
+    ]
+  }

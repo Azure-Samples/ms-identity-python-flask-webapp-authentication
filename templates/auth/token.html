@@ -1,0 +1,19 @@
+{% extends 'content.html' %}
+
+{% set exclude_claims = ['iat', 'exp', 'nbf', 'uti', 'aio'] %}
+
+{% block header %}
+    ID Token Details
+{% endblock %}
+
+{% block text %}
+    {% if session.msal_authenticated %}
+        {% for claim, value in session.msal_id_token_claims.items() %}
+            {% if claim not in exclude_claims %}
+                <b>{{ claim }}:</b> {{ value }} </br>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+    

@@ -1,0 +1,13 @@
+{% extends 'content.html' %}
+
+{% block header %}
+    {{ "You're signed in!" if session.msal_authenticated else "You're signed out."}}
+{% endblock %}
+
+{% block text %}
+    {% if session.msal_authenticated %}
+        Click here to get your <a class="btn btn-success" href="{{ url_for('auth.token_details') }}">ID Token Details</a>
+    {% else %}
+        Use the button on the top right to sign in.
+    {% endif %}
+{% endblock %}
