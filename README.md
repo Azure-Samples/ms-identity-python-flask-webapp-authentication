@@ -1,8 +1,7 @@
 ---
 page_type: sample
-author: idg-sam
 languages:
-  - Python
+  - python
 products:
   - microsoft-authentication-library
   - microsoft-identity-platform
