@@ -1,6 +1,6 @@
 {
     "Sample": {
-      "Title": "A Python Flask Webapp for logging in users in your organization with the Microsoft Identity platform",
+      "Title": "A Python Flask Webapp for signing-in users in your Azure AD tenant with the Microsoft Identity platform",
       "Level": 100,
       "Client": "Python Flask Webapp",
       "Service": "N/A",
@@ -9,26 +9,20 @@
     },
     "AADApps": [
       {
-        "Id": "app",
-        "Name": "PythonAuthenticationSampleMyOrg",
+        "Id": "webApp",
+        "Name": "WebApp-MyOrg-Python",
         "Kind": "WebApp",
         "Audience": "AzureADMyOrg",
         "PasswordCredentials": "Auto",
         "AllowImplicitFlow": false,
         "HomePage": "http://localhost:5000",
         "ReplyUrls": "http://localhost:5000/auth/redirect",
-        "RequiredResourcesAccess": [],
-        "ManualSteps": 
-        [
-          {
-            "Comment": "[Optional] If this app is deployed on the internet, navigate to the Authentication tab and enter the logout URL to enable single-signout"
-          }
-        ]
+        "RequiredResourcesAccess": []
       }
     ],
     "CodeConfiguration": [
       {
-        "App": "app",
+        "App": "webApp",
         "SettingKind": "Replace",
         "SettingFile": "\\..\\config.py",
         "Mappings": [
@@ -38,7 +32,7 @@
           },
           {
             "key": "default-value-enter-your-client-id-here",
-            "value": "app.AppId"
+            "value": "webApp.AppId"
           },
           {
             "key": "default-value-enter-your-client-secret-here",

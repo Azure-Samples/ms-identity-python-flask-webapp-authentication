@@ -1,8 +1,3 @@
-
-
-
-
-
 [CmdletBinding()]
 param(    
     [PSCredential] $Credential,
@@ -13,7 +8,6 @@ param(
 )
 
 #Requires -Modules AzureAD
-
 
 
 if ($null -eq (Get-Module -ListAvailable -Name "AzureAD")) { 
@@ -65,10 +59,9 @@ Function Cleanup
     # Removes the applications
     Write-Host "Cleaning-up applications from tenant '$tenantName'"
 
-
-    Write-Host "Removing 'app' (PythonAuthenticationSampleMyOrg) if needed"
-    Get-AzureADApplication -Filter "DisplayName eq 'PythonAuthenticationSampleMyOrg'"  | ForEach-Object {Remove-AzureADApplication -ObjectId $_.ObjectId }
-    $apps = Get-AzureADApplication -Filter "DisplayName eq 'PythonAuthenticationSampleMyOrg'"
+    Write-Host "Removing 'webApp' (WebApp-MyOrg-Python) if needed"
+    Get-AzureADApplication -Filter "DisplayName eq 'WebApp-MyOrg-Python'"  | ForEach-Object {Remove-AzureADApplication -ObjectId $_.ObjectId }
+    $apps = Get-AzureADApplication -Filter "DisplayName eq 'WebApp-MyOrg-Python'"
     if ($apps)
     {
         Remove-AzureADApplication -ObjectId $apps.ObjectId
@@ -77,12 +70,11 @@ Function Cleanup
     foreach ($app in $apps) 
     {
         Remove-AzureADApplication -ObjectId $app.ObjectId
-        Write-Host "Removed PythonAuthenticationSampleMyOrg.."
+        Write-Host "Removed WebApp-MyOrg-Python.."
     }
     # also remove service principals of this app
-    Get-AzureADServicePrincipal -filter "DisplayName eq 'PythonAuthenticationSampleMyOrg'" | ForEach-Object {Remove-AzureADServicePrincipal -ObjectId $_.Id -Confirm:$false}
+    Get-AzureADServicePrincipal -filter "DisplayName eq 'WebApp-MyOrg-Python'" | ForEach-Object {Remove-AzureADServicePrincipal -ObjectId $_.Id -Confirm:$false}
     
-
 }
 
 Cleanup -Credential $Credential -tenantId $TenantId

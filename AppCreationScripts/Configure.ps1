@@ -21,7 +21,6 @@ param(
  There are four ways to run this script. For more information, read the AppCreationScripts.md file in the same folder as this script.
 #>
 
-
 # Create a password that can be used as an application key
 Function ComputePassword
 {
@@ -47,7 +46,6 @@ Function CreateAppKey([DateTime] $fromDate, [double] $durationInYears, [string]$
     $key.KeyId = $keyId
     return $key
 }
-
 
 # Adds the requiredAccesses (expressed as a pipe separated string) to the requiredAccess structure
 # The exposed permissions are in the $exposedPermissions collection, and the type of permission (Scope | Role) is 
@@ -104,7 +102,6 @@ Function GetRequiredPermissions([string] $applicationDisplayName, [string] $requ
 }
 
 
-
 Function ReplaceInLine([string] $line, [string] $key, [string] $value)
 {
     $index = $line.IndexOf($key)
@@ -135,7 +132,6 @@ Function ReplaceInTextFile([string] $configFilePath, [System.Collections.HashTab
 
     Set-Content -Path $configFilePath -Value $lines -Force
 }
-
 
 Set-Content -Value "<html><body><table>" -Path createdApps.html
 Add-Content -Value "<thead><tr><th>Application</th><th>AppId</th><th>Url in the Azure portal</th></tr></thead><tbody>" -Path createdApps.html
@@ -190,75 +186,51 @@ Function ConfigureApplications
     # Get the user running the script to add the user as the app owner
     $user = Get-AzureADUser -ObjectId $creds.Account.Id
 
-
-   # Create the app AAD application
-   Write-Host "Creating the AAD application (PythonAuthenticationSampleMyOrg)"
-
-   # Get a 2 years application key for the app Application
+   # Create the webApp AAD application
+   Write-Host "Creating the AAD application (WebApp-MyOrg-Python)"
+   # Get a 2 years application key for the webApp Application
    $pw = ComputePassword
    $fromDate = [DateTime]::Now;
    $key = CreateAppKey -fromDate $fromDate -durationInYears 2 -pw $pw
-   $appAppKey = $pw
-
+   $webAppAppKey = $pw
    # create the application 
-   $appAadApplication = New-AzureADApplication -DisplayName "PythonAuthenticationSampleMyOrg" `
-                                               -HomePage "http://localhost:5000" `
-                                               -ReplyUrls "http://localhost:5000/auth/redirect" `
-                                               -IdentifierUris "https://$tenantName/PythonAuthenticationSampleMyOrg" `
-                                               -PasswordCredentials $key `
-                                               -PublicClient $False
-
+   $webAppAadApplication = New-AzureADApplication -DisplayName "WebApp-MyOrg-Python" `
+                                                  -HomePage "http://localhost:5000" `
+                                                  -ReplyUrls "http://localhost:5000/auth/redirect" `
+                                                  -IdentifierUris "https://$tenantName/WebApp-MyOrg-Python" `
+                                                  -PasswordCredentials $key `
+                                                  -PublicClient $False
 
    # create the service principal of the newly created application 
-   $currentAppId = $appAadApplication.AppId
-   $appServicePrincipal = New-AzureADServicePrincipal -AppId $currentAppId -Tags {WindowsAzureActiveDirectoryIntegratedApp}
+   $currentAppId = $webAppAadApplication.AppId
+   $webAppServicePrincipal = New-AzureADServicePrincipal -AppId $currentAppId -Tags {WindowsAzureActiveDirectoryIntegratedApp}
 
    # add the user running the script as an app owner if needed
-   $owner = Get-AzureADApplicationOwner -ObjectId $appAadApplication.ObjectId
+   $owner = Get-AzureADApplicationOwner -ObjectId $webAppAadApplication.ObjectId
    if ($owner -eq $null)
    { 
-        Add-AzureADApplicationOwner -ObjectId $appAadApplication.ObjectId -RefObjectId $user.ObjectId
-        Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($appServicePrincipal.DisplayName)'"
+        Add-AzureADApplicationOwner -ObjectId $webAppAadApplication.ObjectId -RefObjectId $user.ObjectId
+        Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($webAppServicePrincipal.DisplayName)'"
    }
 
 
-
-
-   Write-Host "Done creating the app application (PythonAuthenticationSampleMyOrg)"
+   Write-Host "Done creating the webApp application (WebApp-MyOrg-Python)"
 
    # URL of the AAD application in the Azure portal
-   # Future? $appPortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$appAadApplication.AppId+"/objectId/"+$appAadApplication.ObjectId+"/isMSAApp/"
-   $appPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$appAadApplication.AppId+"/objectId/"+$appAadApplication.ObjectId+"/isMSAApp/"
-   Add-Content -Value "<tr><td>app</td><td>$currentAppId</td><td><a href='$appPortalUrl'>PythonAuthenticationSampleMyOrg</a></td></tr>" -Path createdApps.html
-
+   # Future? $webAppPortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$webAppAadApplication.AppId+"/objectId/"+$webAppAadApplication.ObjectId+"/isMSAApp/"
+   $webAppPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$webAppAadApplication.AppId+"/objectId/"+$webAppAadApplication.ObjectId+"/isMSAApp/"
+   Add-Content -Value "<tr><td>webApp</td><td>$currentAppId</td><td><a href='$webAppPortalUrl'>WebApp-MyOrg-Python</a></td></tr>" -Path createdApps.html
 
    $requiredResourcesAccess = New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
 
-
-   Set-AzureADApplication -ObjectId $appAadApplication.ObjectId -RequiredResourceAccess $requiredResourcesAccess
+   Set-AzureADApplication -ObjectId $webAppAadApplication.ObjectId -RequiredResourceAccess $requiredResourcesAccess
    Write-Host "Granted permissions."
 
-
-   # Update config file for 'app'
+   # Update config file for 'webApp'
    $configFile = $pwd.Path + "\..\config.py"
    Write-Host "Updating the sample code ($configFile)"
-
-   $dictionary = @{ "default-value-enter-your-tenant-id-here" = $tenantId;"default-value-enter-your-client-id-here" = $appAadApplication.AppId;"default-value-enter-your-client-secret-here" = $appAppKey };
+   $dictionary = @{ "default-value-enter-your-tenant-id-here" = $tenantId;"default-value-enter-your-client-id-here" = $webAppAadApplication.AppId;"default-value-enter-your-client-secret-here" = $webAppAppKey };
    ReplaceInTextFile -configFilePath $configFile -dictionary $dictionary
-
-
-   Write-Host ""
-   Write-Host -ForegroundColor Green "------------------------------------------------------------------------------------------------" 
-   Write-Host "IMPORTANT: Please follow the instructions below to complete a few manual step(s) in the Azure portal":
-
-   Write-Host "- For 'app'"
-   Write-Host "  - Navigate to '$appPortalUrl'"
-
-   Write-Host "  - [Optional] If this app is deployed on the internet, navigate to the Authentication tab and enter the logout URL to enable single-signout" -ForegroundColor Red 
-
-
-   Write-Host -ForegroundColor Green "------------------------------------------------------------------------------------------------" 
-   
   
    Add-Content -Value "</tbody></table></body></html>" -Path createdApps.html  
 }
