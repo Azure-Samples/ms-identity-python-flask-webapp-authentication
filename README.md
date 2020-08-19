@@ -1,6 +1,5 @@
 ---
 page_type: sample
-author: idg-sam
 languages:
   - python
 products:
@@ -73,7 +72,7 @@ This Sample demonstrates a Python Flask Webapp signing-in in users in your own t
 
 From your shell or command line:
 
-```console
+```Shell
 git clone https://github.com/Azure-Samples/ms-identity-python-flask-webapp-authentication.git
 ```
 
@@ -81,9 +80,25 @@ or download and extract the repository .zip file.
 
 ### Step 2: Install project dependencies
 
-- navigate to the project folder
-- activate a Python 3 virtual environment
-- use the command `pip install -r requirements.txt` to install project dependencies
+1. navigate to the project folder
+2. activate a Python 3 virtual environment
+3. install project dependencies
+
+- In Linux/OSX via the terminal:
+```Shell
+  cd project-root-directory
+  python3 -m venv venv # only required if you don't have a venv already
+  source venv/bin/activate
+  pip install -r requirements.txt
+```
+- In Windows via PowerShell:
+```PowerShell
+  cd project-root-directory
+  python3 -m venv venv # only required if you don't have a venv already
+  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+  . .\venv\Scripts\Activate.ps1
+  pip install -r requirements.txt
+```
 
 ## Register the sample application(s) with your Azure Active Directory tenant
 
@@ -160,7 +175,7 @@ Open the project in your IDE to configure the code.
 
 ## Running the sample
 
-- To run the sample, navigate to the root of the project and run the command `python3 i_oidc_my_org.py`
+- To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)). Run the command `python i_oidc_my_org.py`
 - Navigate to `http://localhost:5000` in your browser
 
 ![Experience](./ReadmeFiles/app.png)

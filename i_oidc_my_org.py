@@ -33,8 +33,7 @@ def create_app(name='i_oidc_my_org', root_path=Path(__file__).parent, config_dic
     @app.route('/')
     def index():
         # is there already an id token in the user's session? if not make an empty dictionary
-        auth_user=session.get('token_acquisition_result', dict())
-        return render_template('i_oidc_my_org/index.html', auth_user_claims=auth_user.get('id_token_claims'))
+        return render_template('i_oidc_my_org/content.html')
 
     return app
 

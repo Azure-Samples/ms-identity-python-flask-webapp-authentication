@@ -1,0 +1,25 @@
+{% set id_token = session.at_result.id_token if session.at_result is defined else '' %}
+
+<div class="card">
+    <h5 class="card-header bg-primary">
+        ID Token Details
+    </h5>
+    <div class="card-body">
+        <h5 class="card-title">
+            Claims:
+        </h5>
+            {% if id_token_claims %}
+            <p class="card-text">
+                {% for claim, value in id_token_claims.items() %}
+                    <b>{{ claim }}:</b> {{ value }} </br>
+                {% endfor %}
+            {% else %}
+                Log in to see ID Token details
+            </p>
+            {% endif %}
+        </p>
+        <div class="card-footer">
+            {{ id_token }}
+        </div>
+    </div>
+</div>
