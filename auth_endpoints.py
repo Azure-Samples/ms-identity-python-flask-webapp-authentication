@@ -6,7 +6,7 @@ import msal
 
 config = current_app.config
 
-auth = Blueprint('auth', __name__, url_prefix=config.get('AUTH_ENDPOINTS_PREFIX'))
+auth = Blueprint('auth', __name__, url_prefix=config.get('AUTH_ENDPOINTS_PREFIX'), static_folder='static')
 
 msal_instance = msal.ConfidentialClientApplication(
     config.get('CLIENT_ID'),
@@ -15,10 +15,9 @@ msal_instance = msal.ConfidentialClientApplication(
     token_cache=None # we don't really need a token cache since this is just authentication - we do not require AT or RT persistence
 )
 
-
-@auth.route('/profile')
-def profile():
-    return render_template('i_oidc_my_org/index.html', auth_session={}) # TODO: change this to the user profile blueprint
+@auth.route('/token-details')
+def token_details():
+    return render_template('i_oidc_my_org/content.html')
 
 @auth.route('/login')
 def login():
@@ -49,9 +48,10 @@ def authorization_redirect():
         print("AuthN / AuthZ failed")
         return redirect(url_for('index'))
     elif authorization_code:
-        token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'),)
+        token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
         if token_acquisition_result != "error":
-            session["token_acquisition_result"] = token_acquisition_result
+            print (f"TOKEN IS: ${token_acquisition_result}")
+            session["at_result"] = token_acquisition_result
 
     return redirect(url_for('index'))
 
@@ -61,5 +61,5 @@ def logout():
 
 @auth.route('/post_logout')
 def post_logout():
-    session.clear()                              # clear this server-side session on successful logout
+    session.clear()                              # clear our server-side session on successful logout
     return redirect(url_for('index'))            # take us back to the home page

@@ -1,0 +1,33 @@
+.body-content {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.flashToast {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.card {
+    width: 50vw;
+    margin:auto;
+    border:1px solid black;
+    background:#e0e0e0;
+}
+
+.card-text {
+    align-content: center
+}

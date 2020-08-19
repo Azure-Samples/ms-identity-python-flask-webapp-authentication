@@ -7,17 +7,14 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="../static/style.css"> -->
+    <link rel="stylesheet" href="static/style.css">
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
         <a class="navbar-brand" href="/">Microsoft Identity Platform</a>
-
         <span class="navbar-text">{% block header %}{% endblock %}</span>
-
         <div class="btn-group ml-auto dropleft">
             {% include "auth/auth-bar.html" %}
         </div>
@@ -26,29 +23,15 @@
 
 
     <div class="container body-content">
-        <!-- BODY HTML PARTIAL GOES HERE -->
+        {% block body %}{% endblock %}
     </div>
 
-    <div class="card text-center">
-        <div class="card-body">
-            <h5 class="card-title">
-                {% block main_card_title %} {% endblock %}
-            </h5>
-
-            {% block main_card_body %} {% endblock %}
-
-            <!-- <h5 class="alert alert-secondary" role="alert" id="mainCard">
-            </h5> -->
-            <!-- <h5 class="alert alert-info" role="alert" id="infoMessage">
-            </h5> -->
-        </div>
-    </div>
-    {% for message in get_flashed_messages() %}
-        {% include 'flash_toast.html' %}
-    {% endfor %}
-    <!-- <hr /> -->
+    
+    
+    {% block flash_messages %}
+    {% endblock %}
     <footer style="text-align: center;">
-        <p>&copy; 2020 Microsoft Corp</p>
+        {% block footer%}{% endblock %}
     </footer>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
