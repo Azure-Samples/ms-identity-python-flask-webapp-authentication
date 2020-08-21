@@ -1,14 +1,13 @@
 <div class="card">
     <h5 class="card-header bg-primary">
-        Login Status:
-        {{ "You're logged in!" if id_token_claims else "You're logged out."}}
+        {{ "You're signed in!" if id_token_claims else "You're signed out."}}
     </h5>
     <div class="card-body">
             {% if id_token_claims %}
                 <p class="card-text">
-                Try getting your <a class="btn btn-success" href="{{ url_for('auth.token_details') }}">ID Token Details</a>
+                Click here to get your <a class="btn btn-success" href="{{ url_for('auth.token_details') }}">ID Token Details</a>
             {% else %}
-                Use the button on the top right to log in.
+                Use the button on the top right to sign in.
                 </p>
             {% endif %}
         </p>

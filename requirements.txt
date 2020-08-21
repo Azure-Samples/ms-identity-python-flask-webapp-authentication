@@ -1,3 +1,4 @@
+astroid==2.4.2
 cachelib==0.1.1
 certifi==2020.6.20
 cffi==1.14.1
@@ -7,13 +8,20 @@ cryptography==3.0
 Flask==1.1.2
 Flask-Session==0.3.2
 idna==2.10
+isort==4.3.21
 itsdangerous==1.1.0
 Jinja2==2.11.2
+lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
+mccabe==0.6.1
 msal==1.4.3
 pycparser==2.20
 PyJWT==1.7.1
+pylint==2.5.3
+pyOpenSSL==19.1.0
 requests==2.24.0
 six==1.15.0
+toml==0.10.1
 urllib3==1.25.10
 Werkzeug==1.0.1
+wrapt==1.12.1

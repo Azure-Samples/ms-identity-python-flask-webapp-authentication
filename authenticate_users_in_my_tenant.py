@@ -39,4 +39,8 @@ def create_app(name='i_oidc_my_org', root_path=Path(__file__).parent, config_dic
 
 
 if __name__ == '__main__':
-    create_app(root_path=Path(__file__).parent).run()
+    root_path=Path(__file__).parent
+    app=create_app(root_path=root_path)
+    # the param value in the following line creates an adhoc ssl cert and allows the app to serve HTTPS on loopback 127.0.0.1.
+    # Use a real certificate in production
+    app.run(ssl_context='adhoc')

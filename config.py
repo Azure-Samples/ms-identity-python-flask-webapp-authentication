@@ -3,11 +3,11 @@ import os
 ### YOUR APP CONFIGS ###
 
 # this is required for encrypting flask session cookies.
-SECRET_KEY = os.environ.get('SAMPLE_APP_ENCRYPTION_KEY','enter-a-great-kee') # should be loaded from env vars or other secure location.
+SECRET_KEY = os.environ.get('SAMPLE_APP_ENCRYPTION_KEY','enter-a-great-key') # should be loaded from env vars or other secure location.
 SESSION_TYPE = 'filesystem'
 
-# Your Hosted or Local App URL. Flask runs the dev server on localhost:5000 by default
-APP_URL = 'http://localhost:5000'
+# Your Hosted or Local App URL. Flask runs the dev server on 127.0.0.1:5000 by default
+APP_URL = 'https://127.0.0.1:5000'
 
 # Your app's redirect URL.
 REDIRECT_ENDPOINT = '/redirect'
@@ -19,11 +19,17 @@ AUTH_ENDPOINTS_PREFIX = '/auth'
 # AAD will tell the user's browser to go here after the user enters credentials
 REDIRECT_URL = f'{APP_URL}{AUTH_ENDPOINTS_PREFIX}{REDIRECT_ENDPOINT}'
 
-# AAD will redirect the user here after a successful logout. Also required for SSO (when app is deployed on the interwebs)
-POST_LOGOUT_ENDPOINT = '/post_logout'
+# Our app's sign in URL
+SIGN_OUT_ENDPOINT = '/sign_in'
 
-# AAD will send a request here to clear out the user session no matter where the user signs out from (single-sign-out)
-POST_LOGOUT_URL = f'{APP_URL}{AUTH_ENDPOINTS_PREFIX}{POST_LOGOUT_ENDPOINT}'
+# Our app's sign out URL
+SIGN_OUT_ENDPOINT = '/sign_out'
+
+# AAD will redirect the user here after a successful logout.
+POST_SIGN_OUT_ENDPOINT = '/post_sign_out'
+
+# AAD will send a request here to clear out the user session after successful sign out.
+POST_SIGN_OUT_URL = f'{APP_URL}{AUTH_ENDPOINTS_PREFIX}{POST_SIGN_OUT_ENDPOINT}'
 
 # auth response type - we only want to authenticate and get an ID TOKEN in this case
 RESPONSE_TYPE = 'code' # MSAL default is 'code' if this is not provided.
@@ -31,14 +37,14 @@ RESPONSE_TYPE = 'code' # MSAL default is 'code' if this is not provided.
 ### AZURE ACTIVE DIRECTORY APPLICATION CONFIGS ###
 
 # Your Azure AD tenant's ID / Directory ID on Azure AD
-TENANT_ID = 'default-value-enter-your-tenant-id-here'
+TENANT_ID = 'df652e13-1fbd-45a2-ac5c-871196d00221'
 
 # Your app's client/app ID on Azure AD
-CLIENT_ID = 'default-value-enter-your-client-id-here'
+CLIENT_ID = '27d30617-6c78-46c8-afd7-a7453c3a7072'
 
 # Your app's client secret on Azure AD
 # NEVER save this in the configs in a production system - it should be loaded from env variable, key vault, or other secure location.
-CLIENT_SECRET = os.environ.get('SAMPLE_APP_CLIENT_SECRET', 'default-value-enter-your-client-secret-here')
+CLIENT_SECRET = os.environ.get('SAMPLE_APP_CLIENT_SECRET', 'squZ2IpUVVyoYY1d7CFJhpZq7Du94HWUjZbEu4aGhsc=')
 
 #Scopes requested by the application
 SCOPES = [] # where we're going, we don't need scopes (default scopes suffice)
@@ -63,10 +69,10 @@ AUTHORITY = AUTHORITY_SINGLE_TENANT
 ### AZURE ACTIVE DIRECTORY LOGOUT URLS ###
 
 # The AAD endpoint to log your user out
-LOGOUT_ENDPOINT = '/oauth2/v2.0/logout'
+AAD_SIGN_OUT_ENDPOINT = '/oauth2/v2.0/logout'
 
 # post-logout param to tell AAD to redirect the user back to the app
-POST_LOGOUT_URL_PARAM = f'?post_logout_redirect_uri={POST_LOGOUT_URL}'
+AAD_POST_SIGN_OUT_URL_PARAM = f'?post_logout_redirect_uri={POST_SIGN_OUT_URL}'
 
-# The full URL for AAD to log your user out. Needs to be appended with value for your app's 
-LOGOUT_URL = f'{AUTHORITY}{LOGOUT_ENDPOINT}{POST_LOGOUT_URL_PARAM}'
+# The URL for AAD to log your user out.
+AAD_SIGN_OUT_URL = f'{AUTHORITY}{AAD_SIGN_OUT_ENDPOINT}{AAD_POST_SIGN_OUT_URL_PARAM}'

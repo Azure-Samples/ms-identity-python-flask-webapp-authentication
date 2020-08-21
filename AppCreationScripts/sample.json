@@ -1,6 +1,6 @@
 {
     "Sample": {
-      "Title": "A Python Flask Webapp for signing-in users in your Azure AD tenant with the Microsoft Identity platform",
+      "Title": "A Python Flask Webapp to sign in users in your Azure AD tenant with the Microsoft Identity platform",
       "Level": 100,
       "Client": "Python Flask Webapp",
       "Service": "N/A",
@@ -10,13 +10,13 @@
     "AADApps": [
       {
         "Id": "webApp",
-        "Name": "WebApp-MyOrg-Python",
+        "Name": "WebApp_Python_Flask_Authentication_MyOrg",
         "Kind": "WebApp",
         "Audience": "AzureADMyOrg",
         "PasswordCredentials": "Auto",
         "AllowImplicitFlow": false,
-        "HomePage": "http://localhost:5000",
-        "ReplyUrls": "http://localhost:5000/auth/redirect",
+        "HomePage": "https://127.0.0.1:5000",
+        "ReplyUrls": "https://127.0.0.1:5000/auth/redirect",
         "RequiredResourcesAccess": []
       }
     ],

@@ -187,17 +187,17 @@ Function ConfigureApplications
     $user = Get-AzureADUser -ObjectId $creds.Account.Id
 
    # Create the webApp AAD application
-   Write-Host "Creating the AAD application (WebApp-MyOrg-Python)"
+   Write-Host "Creating the AAD application (WebApp_Python_Flask_Authentication_MyOrg)"
    # Get a 2 years application key for the webApp Application
    $pw = ComputePassword
    $fromDate = [DateTime]::Now;
    $key = CreateAppKey -fromDate $fromDate -durationInYears 2 -pw $pw
    $webAppAppKey = $pw
    # create the application 
-   $webAppAadApplication = New-AzureADApplication -DisplayName "WebApp-MyOrg-Python" `
-                                                  -HomePage "http://localhost:5000" `
-                                                  -ReplyUrls "http://localhost:5000/auth/redirect" `
-                                                  -IdentifierUris "https://$tenantName/WebApp-MyOrg-Python" `
+   $webAppAadApplication = New-AzureADApplication -DisplayName "WebApp_Python_Flask_Authentication_MyOrg" `
+                                                  -HomePage "https://127.0.0.1:5000" `
+                                                  -ReplyUrls "https://127.0.0.1:5000/auth/redirect" `
+                                                  -IdentifierUris "https://$tenantName/WebApp_Python_Flask_Authentication_MyOrg" `
                                                   -PasswordCredentials $key `
                                                   -PublicClient $False
 
@@ -214,12 +214,12 @@ Function ConfigureApplications
    }
 
 
-   Write-Host "Done creating the webApp application (WebApp-MyOrg-Python)"
+   Write-Host "Done creating the webApp application (WebApp_Python_Flask_Authentication_MyOrg)"
 
    # URL of the AAD application in the Azure portal
    # Future? $webAppPortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$webAppAadApplication.AppId+"/objectId/"+$webAppAadApplication.ObjectId+"/isMSAApp/"
    $webAppPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$webAppAadApplication.AppId+"/objectId/"+$webAppAadApplication.ObjectId+"/isMSAApp/"
-   Add-Content -Value "<tr><td>webApp</td><td>$currentAppId</td><td><a href='$webAppPortalUrl'>WebApp-MyOrg-Python</a></td></tr>" -Path createdApps.html
+   Add-Content -Value "<tr><td>webApp</td><td>$currentAppId</td><td><a href='$webAppPortalUrl'>WebApp_Python_Flask_Authentication_MyOrg</a></td></tr>" -Path createdApps.html
 
    $requiredResourcesAccess = New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
 

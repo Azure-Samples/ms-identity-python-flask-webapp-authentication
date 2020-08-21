@@ -15,12 +15,12 @@ msal_instance = msal.ConfidentialClientApplication(
     token_cache=None # we don't really need a token cache since this is just authentication - we do not require AT or RT persistence
 )
 
-@auth.route('/token-details')
+@auth.route('/token_details')
 def token_details():
     return render_template('i_oidc_my_org/content.html')
 
-@auth.route('/login')
-def login():
+@auth.route(config.get('SIGN_IN_ENDPOINT'))
+def sign_in():
     # state is important to check if we are receiving the code or token for the correct person (CSRF protection)
     session["state"] = str(uuid.uuid4())
     auth_url = msal_instance.get_authorization_request_url(
@@ -55,11 +55,11 @@ def authorization_redirect():
 
     return redirect(url_for('index'))
 
-@auth.route('/logout')
-def logout():
-    return redirect(config.get('LOGOUT_URL'))    # send the user to Azure AD logout endpoint
+@auth.route(config.get('SIGN_OUT_ENDPOINT'))
+def sign_out():
+    return redirect(config.get('AAD_SIGN_OUT_URL'))    # send the user to Azure AD logout endpoint
 
-@auth.route('/post_logout')
-def post_logout():
+@auth.route(config.get('POST_SIGN_OUT_ENDPOINT'))
+def post_sign_out():
     session.clear()                              # clear our server-side session on successful logout
     return redirect(url_for('index'))            # take us back to the home page

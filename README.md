@@ -2,6 +2,7 @@
 page_type: sample
 languages:
   - python
+  - flask
 products:
   - azure
   - azure-active-directory  
@@ -21,8 +22,8 @@ description: "This Sample demonstrates a Python Flask Webapp signing-in in users
     - [Step 2: Install project dependencies](#step-2-install-project-dependencies)
   - [Register the sample application(s) with your Azure Active Directory tenant](#register-the-sample-applications-with-your-azure-active-directory-tenant)
     - [Choose the Azure AD tenant where you want to create your applications](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
-      - [Register the webApp app (WebApp-MyOrg-Python)](#register-the-webapp-app-webapp-myorg-python)
-      - [Configure the webApp app (WebApp-MyOrg-Python) to use your app registration](#configure-the-webapp-app-webapp-myorg-python-to-use-your-app-registration)
+      - [Register the webApp app (WebApp_Python_Flask_Authentication_MyOrg)](#register-the-webapp-app-webapp-python-flask-authentication-myorg)
+      - [Configure the webApp app (WebApp_Python_Flask_Authentication_MyOrg) to use your app registration](#configure-the-webapp-app-webapp-python-flask-authentication-myorg-to-use-your-app-registration)
   - [Running the sample](#running-the-sample)
   - [Explore the sample](#explore-the-sample)
   - [About the code](#about-the-code)
@@ -142,12 +143,12 @@ As a first step you'll need to:
 1. If your account is present in more than one Azure AD tenant, select your profile at the top right corner in the menu on top of the page, and then **switch directory** to change your portal session to the desired Azure AD tenant..
 
 
-#### Register the webApp app (WebApp-MyOrg-Python)
+#### Register the webApp app (WebApp_Python_Flask_Authentication_MyOrg)
 
 1. Navigate to the Microsoft identity platform for developers [App registrations](https://go.microsoft.com/fwlink/?linkid=2083908) page.
 1. Select **New registration**.
 1. In the **Register an application page** that appears, enter your application's registration information:
-   - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `WebApp-MyOrg-Python`.
+   - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `WebApp_Python_Flask_Authentication_MyOrg`.
    - Under **Supported account types**, select **Accounts in this organizational directory only**.
    - In the **Redirect URI (optional)** section, select **Web** in the combo-box and enter the following redirect URI: `http://localhost:5000/auth/redirect`.
 1. Select **Register** to create the application.
@@ -162,7 +163,7 @@ As a first step you'll need to:
    - The generated key value will be displayed when you click the **Add** button. Copy the generated value for use in the steps later.
    - You'll need this key later in your code's configuration files. This key value will not be displayed again, and is not retrievable by any other means, so make sure to note it from the Azure portal before navigating to any other screen or blade.
 
-#### Configure the webApp app (WebApp-MyOrg-Python) to use your app registration
+#### Configure the webApp app (WebApp_Python_Flask_Authentication_MyOrg) to use your app registration
 
 Open the project in your IDE to configure the code.
 
@@ -170,13 +171,13 @@ Open the project in your IDE to configure the code.
 
 1. Open the `config.py` file
 1. Find the app key `default-value-enter-your-tenant-id-here` and replace the existing value with your Azure AD tenant ID.
-1. Find the app key `default-value-enter-your-client-id-here` and replace the existing value with the application ID (clientId) of the `WebApp-MyOrg-Python` application copied from the Azure portal.
-1. Find the app key `default-value-enter-your-client-secret-here` and replace the existing value with the key you saved during the creation of the `WebApp-MyOrg-Python` app, in the Azure portal.
+1. Find the app key `default-value-enter-your-client-id-here` and replace the existing value with the application ID (clientId) of the `WebApp_Python_Flask_Authentication_MyOrg` application copied from the Azure portal.
+1. Find the app key `default-value-enter-your-client-secret-here` and replace the existing value with the key you saved during the creation of the `WebApp_Python_Flask_Authentication_MyOrg` app, in the Azure portal.
 
 ## Running the sample
 
-- To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)). Run the command `python i_oidc_my_org.py`
-- Navigate to `http://localhost:5000` in your browser
+- To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)). Run the command `python authenticate_users_in_my_tenant.py`
+- Navigate to `https://127.0.0.1:5000` in your browser
 
 ![Experience](./ReadmeFiles/app.png)
 
