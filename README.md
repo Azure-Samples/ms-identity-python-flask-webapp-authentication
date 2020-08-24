@@ -54,7 +54,7 @@ This Sample demonstrates a Python Flask Webapp signing-in in users in your own t
 | File/folder       | Description                                |
 |-------------------|--------------------------------------------|
 |`AppCreationScripts/`| Folder contains scripts to automatically configure Azure AD app registrations|
-|`i_oidc_my_org.py` | The sample app code.                       |
+|`authenticate_users_in_my_tenant.py` | The sample app code.                       |
 |`auth_endpoints.py`| The auth related endpoints code.           |
 | `CHANGELOG.md`    | List of changes to the sample.             |
 | `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
