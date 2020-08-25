@@ -218,9 +218,9 @@ After sending a request to the /authorize endpoint on AAD, our app receives an a
 
 MSAL Python takes care of:
 
- 1. Downloading the Azure AD metadata, finding the signing keys, and finding the issuer name for the tenant.
- 1. Processing OpenID Connect sign-in responses by validating the signature and issuer in the incoming JWT.
- 1. Parsing the ID Token claims into plaintext.
+ * Downloading the Azure AD metadata, finding the signing keys, and finding the issuer name for the tenant.
+ * Processing OpenID Connect sign-in responses by validating the signature and issuer in the incoming JWT.
+ * Parsing the ID Token claims into plaintext.
  
 The result is then put into a server-side session, under `session['msal']`. ID Token claims may be found under the nested `id_token_claims` property, and the ID Token itself is placed under the nested `id_token` property.
 
