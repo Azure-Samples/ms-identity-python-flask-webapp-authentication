@@ -1,17 +1,18 @@
 from flask import Flask, Blueprint, session, render_template
 from flask_session import Session
 from pathlib import Path
-import json
 import config as dev_config
 import os
 
 
-def create_app(name='i_oidc_my_org', root_path=Path(__file__).parent, config_dict=None):
+def create_app(name='authenticate_users_in_my_org', root_path=Path(__file__).parent, config_dict=None):
     app = Flask(name, root_path=root_path)
-    if os.environ.get('FLASK_ENV') == 'production':
+    app.config['ENV'] = os.environ.get('FLASK_ENV', 'development')
+    if app.config.get('ENV') == 'production':
         # supply a production config here?
         return None
     else:
+        app.config['DEBUG'] = True
         app.config.from_object(dev_config)
 
     if config_dict is not None:
@@ -31,9 +32,8 @@ def create_app(name='i_oidc_my_org', root_path=Path(__file__).parent, config_dic
 
     # add the default route (/)
     @app.route('/')
-    def index():
-        # is there already an id token in the user's session? if not make an empty dictionary
-        return render_template('i_oidc_my_org/content.html')
+    def index():        
+        return render_template('auth/status.html')
 
     return app
 
@@ -41,6 +41,6 @@ def create_app(name='i_oidc_my_org', root_path=Path(__file__).parent, config_dic
 if __name__ == '__main__':
     root_path=Path(__file__).parent
     app=create_app(root_path=root_path)
-    # the param value in the following line creates an adhoc ssl cert and allows the app to serve HTTPS on loopback 127.0.0.1.
+    # the param value in the following line creates an adhoc ssl cert and allows the app to serve HTTPS on loopback (127.0.0.1).
     # Use a real certificate in production
     app.run(ssl_context='adhoc')

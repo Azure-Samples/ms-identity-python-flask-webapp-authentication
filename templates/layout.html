@@ -14,9 +14,11 @@
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Microsoft Identity Platform</a>
-        <span class="navbar-text">{% block header %}{% endblock %}</span>
+        <span class="navbar-text">{% block banner_text %}{% endblock %}</span>
         <div class="btn-group ml-auto dropleft">
-            {% include "auth/auth-bar.html" %}
+            <ul class="nav navbar-nav navbar-right">
+                {% include "auth/auth-bar.html" %}
+            </ul>
         </div>
     </nav>
     

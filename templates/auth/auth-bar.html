@@ -1,14 +1,10 @@
-{% if id_token_claims.name %}
-    <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.token_details') }}">Hello {{ id_token_claims.name }}!</a>
-        </li>
-        <li>
-            <a class="btn btn-warning" href="{{ url_for('auth.sign_out') }}">Sign Out</a>
-        </li>
-    </ul>
+{% if session.authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('auth.token_details') }}">Hello {{ session.msal.id_token_claims.name }}!</a>
+    </li>
+    <li>
+        <a class="btn btn-warning" href="{{ url_for('auth.sign_out') }}">Sign Out</a>
+    </li>
 {% else %}
-    <ul class="navbar navbar-nav navbar-right">
-        <li><a class="btn btn-success" href="{{ url_for('auth.sign_in') }}">Sign In</a></li>
-    </ul>
+    <li><a class="btn btn-success" href="{{ url_for('auth.sign_in') }}">Sign In</a></li>
 {% endif %}

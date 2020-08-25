@@ -37,14 +37,14 @@ RESPONSE_TYPE = 'code' # MSAL default is 'code' if this is not provided.
 ### AZURE ACTIVE DIRECTORY APPLICATION CONFIGS ###
 
 # Your Azure AD tenant's ID / Directory ID on Azure AD
-TENANT_ID = 'df652e13-1fbd-45a2-ac5c-871196d00221'
+TENANT_ID = 'default-value-enter-your-tenant-id-here'
 
 # Your app's client/app ID on Azure AD
-CLIENT_ID = '27d30617-6c78-46c8-afd7-a7453c3a7072'
+CLIENT_ID = 'default-value-enter-your-client-id-here'
 
 # Your app's client secret on Azure AD
 # NEVER save this in the configs in a production system - it should be loaded from env variable, key vault, or other secure location.
-CLIENT_SECRET = os.environ.get('SAMPLE_APP_CLIENT_SECRET', 'squZ2IpUVVyoYY1d7CFJhpZq7Du94HWUjZbEu4aGhsc=')
+CLIENT_SECRET = os.environ.get('SAMPLE_APP_CLIENT_SECRET', 'default-value-enter-your-client-secret-here')
 
 #Scopes requested by the application
 SCOPES = [] # where we're going, we don't need scopes (default scopes suffice)

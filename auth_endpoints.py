@@ -1,7 +1,5 @@
 from flask import Flask, Blueprint, redirect, url_for, request, session, render_template, flash, g, current_app
 import uuid
-from pathlib import Path
-import json
 import msal
 
 config = current_app.config
@@ -17,7 +15,9 @@ msal_instance = msal.ConfidentialClientApplication(
 
 @auth.route('/token_details')
 def token_details():
-    return render_template('i_oidc_my_org/content.html')
+    if (session.get('authenticated') != True):
+        return render_template('auth/401.html')
+    return render_template('auth/token.html')
 
 @auth.route(config.get('SIGN_IN_ENDPOINT'))
 def sign_in():
@@ -32,26 +32,24 @@ def sign_in():
 
 @auth.route(config.get('REDIRECT_ENDPOINT'))
 def authorization_redirect():
-    # TODO: move this logic
     authorization_code = request.args.get('code', None)
     if authorization_code is None:
-        # You can also render your own Error page here!
-        print("request to this endpoint must have 'code' URL query parameter")
+        current_app.logger.error("request to this endpoint must have 'code' URL query parameter")
         return "Bad Request: request must have 'code' URL query parameter", 400
     # CSRF protection: make sure to check that state matches the one we placed in session !
     if request.args.get('state') != session.get("state"):
-        # should flash a message to the user side (CSRF protection)
-        print("state doesn't match. cancelling auth.")
+        #This check ensures our server made the request for this auth code
+        current_app.logger.error("state doesn't match. cancelling auth.")
         return redirect(url_for('index'))
     elif 'error' in request.args: # AuthN/AuthZ failed :(
-        # should flash a message user side
-        print("AuthN / AuthZ failed")
+        current_app.logger.error("AuthN / AuthZ failed")
         return redirect(url_for('index'))
     elif authorization_code:
         token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
         if token_acquisition_result != "error":
-            print (f"TOKEN IS: ${token_acquisition_result}")
-            session["at_result"] = token_acquisition_result
+            current_app.logger.info(f"TOKEN IS: ${token_acquisition_result}")
+            session['msal'] = token_acquisition_result
+            session['authenticated'] = True
 
     return redirect(url_for('index'))
 

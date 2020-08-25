@@ -193,16 +193,36 @@ Open the project in your IDE to configure the code.
 
 ## About the code
 
-This sample shows how to use [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign-in users from an Azure AD tenant. The library is instantiated in the **auth_endpoints.py** file. The following parameters need to be provided:
+This sample shows how to use [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users from your Azure AD tenant. The library is instantiated in the [auth_endpoints.py](auth_endpoints.py) file. The following parameters need to be provided:
 
 * the Client ID of the app, and
 * the tenant ID where the app is registered
 * the Azure AD authority.
  
-These values are read from the **config.py** file. MSAL Python takes care of:
+These values are read from the [config.py](config.py) file. 
+
+```python
+    msal_instance = msal.ConfidentialClientApplication(
+        config.get('CLIENT_ID'),
+        client_credential=config.get('CLIENT_SECRET'),
+        authority=config.get('AUTHORITY'),
+        token_cache=None # we don't really need a serializable token cache since this app is just authentication - we do not require AT or RT persistence
+)
+```
+
+After sending a request to the /authorize endpoint on AAD, our app receives an authorization code in its redirect endpoint. It then exchanges this token for an ID Token and Access Token from AAD.
+
+```python
+    token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
+```
+
+MSAL Python takes care of:
 
  1. Downloading the Azure AD metadata, finding the signing keys, and finding the issuer name for the tenant.
- 1. Processing OpenID Connect sign-in responses by validating the signature and issuer in an incoming JWT, extracting the user's claims, and putting the claims in `session['auth_current_user']['id_token_claims']` in a server-side session.
+ 1. Processing OpenID Connect sign-in responses by validating the signature and issuer in the incoming JWT.
+ 1. Parsing the ID Token claims into plaintext.
+ 
+The result is then put into a server-side session, under `session['msal']`. ID Token claims may be found under the nested `id_token_claims` property, and the ID Token itself is placed under the nested `id_token` property.
 
 ## More information
 
