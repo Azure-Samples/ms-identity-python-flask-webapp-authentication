@@ -21,7 +21,7 @@ def token_details():
 
 @auth.route(config.get('SIGN_IN_ENDPOINT'))
 def sign_in():
-    # state is important to check if we are receiving the code or token for the correct person (CSRF protection)
+    # state is important since the redirect endpoint needs to know that our app + same user session initiated the process (CSRF protection)
     session["state"] = str(uuid.uuid4())
     auth_url = msal_instance.get_authorization_request_url(
             config.get('SCOPES'),
@@ -32,24 +32,31 @@ def sign_in():
 
 @auth.route(config.get('REDIRECT_ENDPOINT'))
 def authorization_redirect():
+    # CSRF protection: make sure to check that state matches the one we placed in session
+    # This check ensures our app + the same user session made the /authorize request that resulted in this auth code redirect
+    if request.args.get('state') != session.get("state"):
+        current_app.logger.error("state doesn't match. cancelling auth.")
+        return redirect(url_for('index'))
+
+    if 'error' in request.args:
+        current_app.logger.error("AuthN / AuthZ failed: auth code request resulted in error")
+        return redirect(url_for('index'))
+
     authorization_code = request.args.get('code', None)
     if authorization_code is None:
         current_app.logger.error("request to this endpoint must have 'code' URL query parameter")
         return "Bad Request: request must have 'code' URL query parameter", 400
-    # CSRF protection: make sure to check that state matches the one we placed in session !
-    if request.args.get('state') != session.get("state"):
-        #This check ensures our server made the request for this auth code
-        current_app.logger.error("state doesn't match. cancelling auth.")
-        return redirect(url_for('index'))
-    elif 'error' in request.args: # AuthN/AuthZ failed :(
-        current_app.logger.error("AuthN / AuthZ failed")
-        return redirect(url_for('index'))
-    elif authorization_code:
+    else:
+        # we have an authorization code and have excluded common errors.
+        # now we will exchange it for our tokens.
         token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
         if token_acquisition_result != "error":
             current_app.logger.info(f"TOKEN IS: ${token_acquisition_result}")
+            # now we will place the token(s) and a boolean 'authenticated = True' into the session for later use:
             session['msal'] = token_acquisition_result
             session['authenticated'] = True
+        else:
+            current_app.logger.error("AuthN / AuthZ failed: token request resulted in error")
 
     return redirect(url_for('index'))
 
