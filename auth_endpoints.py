@@ -34,12 +34,13 @@ def sign_in():
 def authorization_redirect():
     # CSRF protection: make sure to check that state matches the one we placed in session
     # This check ensures our app + the same user session made the /authorize request that resulted in this auth code redirect
-    if request.args.get('state') != session.get("state"):
-        current_app.logger.error("state doesn't match. cancelling auth.")
+    state = session.get("state", None)
+    if state is None or request.args.get('state') != state:
+        current_app.logger.error("auth redirect: state doesn't match. aborting.")
         return redirect(url_for('index'))
 
     if 'error' in request.args:
-        current_app.logger.error("AuthN / AuthZ failed: auth code request resulted in error")
+        current_app.logger.error("AuthN / AuthZ failed: auth code request resulted in error. aborting.")
         return redirect(url_for('index'))
 
     authorization_code = request.args.get('code', None)
