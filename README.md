@@ -12,7 +12,7 @@ description: "This Sample demonstrates a Python Flask Webapp signing in users in
 ---
 # A Python Flask Webapp for logging in users in your organization with the Microsoft Identity platform
 
-- [A Python Flask Webapp for signing in users in your organization with the Microsoft Identity platform (Azure Active Directory)](#a-python-flask-webapp-for-logging-in-users-in-your-organization-with-the-microsoft-identity-platform)
+- [A Python Flask Webapp for signing in users in your organization with the Microsoft Identity platform](#a-python-flask-webapp-for-logging-in-users-in-your-organization-with-the-microsoft-identity-platform)
   - [Overview](#overview)
   - [Scenario](#scenario)
   - [Contents](#contents)
