@@ -8,11 +8,11 @@ products:
   - azure-active-directory  
 name: A Python Flask Webapp for signing-in users in your Azure AD tenant with the Microsoft Identity platform
 urlFragment: ms-identity-python-flask-webapp-authentication
-description: "This Sample demonstrates a Python Flask Webapp signing-in in users in your organization using Azure Active Directory"
+description: "This Sample demonstrates a Python Flask Webapp signing in users in your organization using Azure Active Directory"
 ---
 # A Python Flask Webapp for logging in users in your organization with the Microsoft Identity platform
 
-- [A Python Flask Webapp for logging in users in your organization with the Microsoft Identity platform](#a-python-flask-webapp-for-logging-in-users-in-your-organization-with-the-microsoft-identity-platform)
+- [A Python Flask Webapp for signing in users in your organization with the Microsoft Identity platform (Azure Active Directory)](#a-python-flask-webapp-for-logging-in-users-in-your-organization-with-the-microsoft-identity-platform)
   - [Overview](#overview)
   - [Scenario](#scenario)
   - [Contents](#contents)
@@ -36,17 +36,15 @@ description: "This Sample demonstrates a Python Flask Webapp signing-in in users
 
 ## Overview
 
-This Sample demonstrates a Python Flask Webapp signing-in in users in your own tenant using Azure Active Directory. The sample achieves the same using the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python).
-
-1. The ID token is used to authenticate the user and log them in to the webapp, maintaining their logged-in status in the app session.
+This sample demonstrates a Python Flask web app signing-in users in your own tenant using using the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) with Azure Active Directory.
 
 ![Overview](./ReadmeFiles/sign-in.png)
 
 ## Scenario
 
-- This sample shows how to build a Flask Web app that uses OpenID Connect to sign in users in an Azure AD tenant.
-- Users can only sign-in with their work and school accounts in their own Azure AD tenant.
-
+- This sample shows how to build a Flask Web app that uses [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) leveraging the OpenID Connect protocol to sign in users in an organization's Azure Active Directory tenant.
+- Users can only sign in with their work and school accounts in their own Azure AD tenant.
+- Once the user has signed in with Azure AD, the ID token is used by the webapp to authenticate, maintaining the user's signed-in status in a session variable.
 
 
 ## Contents
@@ -56,9 +54,9 @@ This Sample demonstrates a Python Flask Webapp signing-in in users in your own t
 |`AppCreationScripts/`| Folder contains scripts to automatically configure Azure AD app registrations|
 |`authenticate_users_in_my_tenant.py` | The sample app code.                       |
 |`auth_endpoints.py`| The auth related endpoints code.           |
-| `CHANGELOG.md`    | List of changes to the sample.             |
-| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
-| `LICENSE`         | The license for the sample.                |
+|`CHANGELOG.md`     | List of changes to the sample.             |
+|`CONTRIBUTING.md`  | Guidelines for contributing to the sample. |
+|`LICENSE`          | The license for the sample.                |
 
 ## Prerequisites
 
@@ -177,50 +175,54 @@ Open the project in your IDE to configure the code.
 ## Running the sample
 
 - To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)). Run the command `python authenticate_users_in_my_tenant.py`
-- Navigate to `https://127.0.0.1:5000` in your browser
+- Navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000) in your browser
 
 ![Experience](./ReadmeFiles/app.png)
 
 ## Explore the sample
 
-- Note the logged in or logged out status displayed at the center of the screen.
-- Click the context-sensitive button at the top right (it should say `Login` on first run)
-- Follow the instructions on the next page log in with an account in the Azure AD tenant.
-- Note the context-sensitive button now says `Logout` and displays your username to its left.
-- Try signing-out out!
+- Note the signed-in or signed-out status displayed at the center of the screen.
+- Click the context-sensitive button at the top right (it will read `Sign In` on first run)
+- Follow the instructions on the next page sign in with an account in the Azure AD tenant.
+- Note the context-sensitive button now says `Sign out` and displays your username to its left.
+- The middle of the screen now has an option to click for ID Token Details: click it to see some of the ID token's decoded claims.
+- You can also use the button on the top right to sign out.
+- After signing out, click this link to the [token details page](https://127.0.0.1:5000/auth/token_details) to observe how the app displays a `401: unauthorized` error instead of the ID token claims.
 
 > :information_source: Did the sample not work for you as expected? Did you encounter issues trying this sample? Then please reach out to us using the [GitHub Issues](../issues) page.
 
 ## About the code
 
-This sample shows how to use [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users from your Azure AD tenant. The library is instantiated in the [auth_endpoints.py](auth_endpoints.py) file. The following parameters need to be provided:
+This sample shows how to use [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users from your Azure AD tenant. 
 
-* the Client ID of the app, and
-* the tenant ID where the app is registered
-* the Azure AD authority.
- 
-These values are read from the [config.py](config.py) file. 
+* A **ConfidentialClientApplication** object is instantiated in the [auth_endpoints.py](auth_endpoints.py) file. The following parameters need to be provided upon instantiation:
+
+  * The **Client ID** of the app
+  * The **Azure AD Authority** (which, in this sample, includes the Tenant ID of the AAD application).
+  * The **Client Secret**, which is a requirement for Confidential Client Applications
+
+* In this sample, these values are read from the flask configuration object, which receives them from the [config.py](config.py) file. 
 
 ```python
-    msal_instance = msal.ConfidentialClientApplication(
-        config.get('CLIENT_ID'),
-        client_credential=config.get('CLIENT_SECRET'),
-        authority=config.get('AUTHORITY'),
-        token_cache=None # we don't really need a serializable token cache since this app is just authentication - we do not require AT or RT persistence
+msal_instance = msal.ConfidentialClientApplication(
+    config.get('CLIENT_ID'),
+    client_credential=config.get('CLIENT_SECRET'),
+    authority=config.get('AUTHORITY'),
+    token_cache=None # we don't really need a serializable token cache since this app is just authentication - we do not require AT or RT persistence
 )
 ```
-
-After sending a request to the /authorize endpoint on AAD, our app receives an authorization code in its redirect endpoint. It then exchanges this token for an ID Token and Access Token from AAD.
+1. The first step of the sign-in process is to send a request to the /authorize endpoint on Azure Active Directory. Our MSAL(Python) ConfidentialClientApplication instance is leveraged to construct an authorization request URL, and our app redirects the browser to this URL.
+1. The user is presented with a sign-in prompt by Azure Active Directory. If the sign-in attempt is successful, the user's browser is redirected to our app's redirect endpoint. A valid request to this endpoint will contain an **authorization code**.
+1. Our ConfidentialClientApplication instance then exchanges this authorization code for an ID Token and Access Token from Azure Active Directory.
 
 ```python
-    token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
+token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
 ```
 
-MSAL Python takes care of:
-
- * Downloading the Azure AD metadata, finding the signing keys, and finding the issuer name for the tenant.
- * Processing OpenID Connect sign-in responses by validating the signature and issuer in the incoming JWT.
- * Parsing the ID Token claims into plaintext.
+MSAL Python:
+* Downloads the Azure AD metadata, including signing keys, and finds the issuer name for the tenant.
+* Processes Azure AD responses by validating the signature and issuer in the ID and/or Access tokens.
+* Parses the ID Token claims into plaintext.
  
 The result is then put into a server-side session, under `session['msal']`. ID Token claims may be found under the nested `id_token_claims` property, and the ID Token itself is placed under the nested `id_token` property.
 
