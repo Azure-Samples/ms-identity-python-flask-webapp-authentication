@@ -32,8 +32,8 @@ description: "This Sample demonstrates a Python Flask Webapp signing in users in
   - [Contributing](#contributing)
   - [Code of Conduct](#code-of-conduct)
 
-![Build badge](https://identitydivision.visualstudio.com/_apis/public/build/definitions/a7934fdd-dcde-4492-a406-7fad6ac00e17/<BuildNumber>/badge)
-
+<!-- ![Build badge](https://identitydivision.visualstudio.com/_apis/public/build/definitions/a7934fdd-dcde-4492-a406-7fad6ac00e17/<BuildNumber>/badge)
+// TODO: COMMENT OUT BUILD BADGE UNTIL WE FIND A PURPOSE FOR IT-->
 ## Overview
 
 This sample demonstrates a Python Flask web app signing-in users in your own tenant using using the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) with Azure Active Directory.
