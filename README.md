@@ -10,9 +10,9 @@ name: A Python Flask Webapp for signing-in users in your Azure AD tenant with th
 urlFragment: ms-identity-python-flask-webapp-authentication
 description: "This Sample demonstrates a Python Flask Webapp signing in users in your organization using Azure Active Directory"
 ---
-# A Python Flask Webapp for logging in users in your organization with the Microsoft Identity platform
+# A Python Flask Webapp for signing in users in your organization with the Microsoft identity platform
 
-- [A Python Flask Webapp for signing in users in your organization with the Microsoft Identity platform](#a-python-flask-webapp-for-logging-in-users-in-your-organization-with-the-microsoft-identity-platform)
+- [A Python Flask Webapp for signing in users in your organization with the Microsoft identity platform](#a-python-flask-webapp-for-signing-in-users-in-your-organization-with-the-microsoft-identity-platform)
   - [Overview](#overview)
   - [Scenario](#scenario)
   - [Contents](#contents)
