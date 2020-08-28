@@ -208,7 +208,7 @@ msal_instance = msal.ConfidentialClientApplication(
     config.get('CLIENT_ID'),
     client_credential=config.get('CLIENT_SECRET'),
     authority=config.get('AUTHORITY'),
-    token_cache=None # we don't really need a serializable token cache since this app is just authentication - we do not require AT or RT persistence
+    token_cache=None # we don't need a serializable token cache for this project. In-memory token cache will suffice.
 )
 ```
 1. The first step of the sign-in process is to send a request to the /authorize endpoint on Azure Active Directory. Our MSAL(Python) ConfidentialClientApplication instance is leveraged to construct an authorization request URL, and our app redirects the browser to this URL.
