@@ -20,7 +20,7 @@ def sign_in_status():
 
 @auth.route('/token_details')
 def token_details():
-    if session.get('authenticated') != True:
+    if session.get('msal_authenticated') != True:
         current_app.logger.info("token_details: user is not authenticated, will display 401 error")
         return render_template('auth/401.html')
     current_app.logger.info("token_details: user is authenticated, will display token details")
@@ -62,7 +62,7 @@ def authorization_redirect():
         current_app.logger.info("authorization_redirect: attempting to get a token from the /token endpoint")
         token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
         if "error" not in token_acquisition_result:
-            # now we will place the token(s) and a boolean 'authenticated = True' into the session for later use:
+            # now we will place the token(s) and a boolean 'msal_authenticated = True' into the session for later use:
             current_app.logger.info("authorization_redirect: successfully obtained a token from the /token endpoint.\nresults are:\n")
             current_app.logger.debug(json.dumps(token_acquisition_result, indent=4, sort_keys=True))
             _place_token_details_in_session(token_acquisition_result)
@@ -73,9 +73,12 @@ def authorization_redirect():
     return redirect(url_for('index'))
 
 def _place_token_details_in_session(token_acquisition_result):
-    session['msal_token_result'] = token_acquisition_result
-    session['msal_authenticated'] = True
-    session['msal_username'] = session.get('msal', {}).get('id_token_claims', {}).get('name', None)
+    session['msal_token_result']=token_acquisition_result
+    session['msal_authenticated']=True
+    id_token_claims=token_acquisition_result.get('id_token_claims', {})
+    session['msal_id_token_claims'] = id_token_claims
+    session['msal_username'] = id_token_claims.get('name', None)
+    
 
 @auth.route(config.get('SIGN_OUT_ENDPOINT'))
 def sign_out():

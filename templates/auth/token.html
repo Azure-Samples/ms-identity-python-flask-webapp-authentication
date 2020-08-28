@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block text %}
-    {% if session.authenticated %}
-        {% for claim, value in session.msal.id_token_claims.items() %}
+    {% if session.msal_authenticated %}
+        {% for claim, value in session.msal_id_token_claims.items() %}
             {% if claim not in exclude_claims %}
                 <b>{{ claim }}:</b> {{ value }} </br>
             {% endif %}
