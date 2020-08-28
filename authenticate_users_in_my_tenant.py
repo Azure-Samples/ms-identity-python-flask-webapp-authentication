@@ -1,18 +1,20 @@
-from flask import Flask, Blueprint, session, render_template
+from flask import Flask, Blueprint, session, redirect, url_for
 from flask_session import Session
 from pathlib import Path
 import config as dev_config
-import os
+import os, logging
 
 
 def create_app(name='authenticate_users_in_my_org', root_path=Path(__file__).parent, config_dict=None):
     app = Flask(name, root_path=root_path)
     app.config['ENV'] = os.environ.get('FLASK_ENV', 'development')
     if app.config.get('ENV') == 'production':
-        # supply a production config here?
-        return None
+        app.logger.level=logging.INFO
+        # supply a production config here
+        # and remove this line:
+        raise ValueError('define a production config')
     else:
-        app.config['DEBUG'] = True
+        app.logger.level=logging.DEBUG
         app.config.from_object(dev_config)
 
     if config_dict is not None:
@@ -27,13 +29,20 @@ def create_app(name='authenticate_users_in_my_org', root_path=Path(__file__).par
     # this is where our auth-related endpoints are defined:
     import auth_endpoints
     
-    # register the auth endpoints!
+    # register the auth endpoints! These are:
+    # sign-in status
+    # token details
+    # redirect
+    # sign in
+    # sign out
+    # post sign-out
     app.register_blueprint(auth_endpoints.auth)
 
     # add the default route (/)
+    # redirect user to page to see their sign-in status
     @app.route('/')
     def index():        
-        return render_template('auth/status.html')
+        return redirect(url_for('auth.sign_in_status'))
 
     return app
 
