@@ -1,6 +1,6 @@
 {% if session.msal_authenticated %}
     <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.token_details') }}">Hello {{ session.msal.id_token_claims.name }}!</a>
+        <a class="nav-link" href="{{ url_for('auth.token_details') }}">Hello {{ session.msal_username }}!</a>
     </li>
     <li>
         <a class="btn btn-warning" href="{{ url_for('auth.sign_out') }}">Sign Out</a>
