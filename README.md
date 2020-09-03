@@ -224,7 +224,14 @@ MSAL Python:
 * Processes Azure AD responses by validating the signature and issuer in the ID and/or Access tokens.
 * Parses the ID Token claims into plaintext.
  
-The result is then put into a server-side session, under `session['msal']`. ID Token claims may be found under the nested `id_token_claims` property, and the ID Token itself is placed under the nested `id_token` property.
+The result is then put into a server-side session, in the following properties:
+```python
+session['msal_token_result']=token_acquisition_result
+session['msal_authenticated']=True
+id_token_claims=token_acquisition_result.get('id_token_claims', {})
+session['msal_id_token_claims'] = id_token_claims
+session['msal_username'] = id_token_claims.get('name', None)
+```
 
 ## More information
 
