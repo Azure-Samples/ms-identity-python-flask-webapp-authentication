@@ -36,7 +36,7 @@ description: "This Sample demonstrates a Python Flask Webapp signing in users in
 // TODO: COMMENT OUT BUILD BADGE UNTIL WE FIND A PURPOSE FOR IT-->
 ## Overview
 
-This sample demonstrates a Python Flask web app signing-in users in your own tenant using using the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) with Azure Active Directory.
+This sample demonstrates a Python Flask web app signing-in users in your own tenant using the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) with Azure Active Directory.
 
 ![Overview](./ReadmeFiles/sign-in.png)
 
@@ -148,7 +148,7 @@ As a first step you'll need to:
 1. In the **Register an application page** that appears, enter your application's registration information:
    - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `WebApp_Python_Flask_Authentication_MyOrg`.
    - Under **Supported account types**, select **Accounts in this organizational directory only**.
-   - In the **Redirect URI (optional)** section, select **Web** in the combo-box and enter the following redirect URI: `http://localhost:5000/auth/redirect`.
+   - In the **Redirect URI (optional)** section, select **Web** in the combo-box and enter the following redirect URI: `https://127.0.0.1:5000/auth/redirect`.
 1. Select **Register** to create the application.
 1. In the app's registration screen, find and note the **Application (client) ID**. You use this value in your app's configuration file(s) later in your code.
 
@@ -246,7 +246,7 @@ session['msal_username'] = id_token_claims.get('name', None)
 
 ## Community Help and Support
 
-Use [Stack Overflow](http://stackoverflow.com/questions/tagged/msal) to get support from the community.
+Use [Stack Overflow](https://stackoverflow.com/questions/tagged/msal) to get support from the community.
 Ask your questions on Stack Overflow first and browse existing issues to see if someone has asked your question before.
 Make sure that your questions or comments are tagged with [`azure-active-directory` `ms-identity` `adal` `msal`].
 
