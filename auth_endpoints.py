@@ -50,7 +50,7 @@ def authorization_redirect():
 
     if 'error' in request.args:
         current_app.logger.error("authorization_redirect: AuthN / AuthZ failed: auth code request resulted in error. aborting.")
-        return redirect(url_for('index'))
+        return redirect(url_for('post_sign_out')) # sign out on error
 
     authorization_code = request.args.get('code', None)
     if authorization_code is None:
@@ -60,7 +60,10 @@ def authorization_redirect():
         # we have an authorization code and have excluded common errors.
         # now we will exchange it for our tokens.
         current_app.logger.info("authorization_redirect: attempting to get a token from the /token endpoint")
-        token_acquisition_result = msal_instance.acquire_token_by_authorization_code(authorization_code, config.get('SCOPES'))
+        token_acquisition_result = msal_instance.acquire_token_by_authorization_code(
+                                    authorization_code,
+                                    config.get('SCOPES'),
+                                    redirect_uri=config.get('REDIRECT_URI'))
         if "error" not in token_acquisition_result:
             # now we will place the token(s) and a boolean 'msal_authenticated = True' into the session for later use:
             current_app.logger.info("authorization_redirect: successfully obtained a token from the /token endpoint.")
@@ -69,6 +72,7 @@ def authorization_redirect():
         else:
             current_app.logger.error("AuthN / AuthZ failed: token request resulted in error")
             current_app.logger.error(f"{token_acquisition_result['error']}: {token_acquisition_result.get('error_description')}")
+            return redirect(url_for('post_sign_out')) # sign out on error
 
     return redirect(url_for('index'))
 

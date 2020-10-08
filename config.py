@@ -17,7 +17,7 @@ AUTH_ENDPOINTS_PREFIX = '/auth'
 
 # your app's redirect URL
 # AAD will tell the user's browser to go here after the user enters credentials
-REDIRECT_URL = f'{APP_URL}{AUTH_ENDPOINTS_PREFIX}{REDIRECT_ENDPOINT}'
+REDIRECT_URI = f'{APP_URL}{AUTH_ENDPOINTS_PREFIX}{REDIRECT_ENDPOINT}'
 
 # Our app's sign in URL
 SIGN_OUT_ENDPOINT = '/sign_in'
