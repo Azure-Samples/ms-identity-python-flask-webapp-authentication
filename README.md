@@ -179,6 +179,7 @@ Open the project in your IDE to configure the code.
     export FLASK_APP=authenticate_users_in_my_tenant.py
     export FLASK_ENV=development
     export FLASK_DEBUG=1
+    export FLASK_RUN_CERT=adhoc
     flask run
   ```
 - In Windows via PowerShell:
@@ -186,6 +187,7 @@ Open the project in your IDE to configure the code.
     set FLASK_APP=authenticate_users_in_my_tenant.py
     set FLASK_ENV=development
     set FLASK_DEBUG=1
+    set FLASK_RUN_CERT=adhoc
     flask run
   ```
 - Alternatively, you may use `python -m flask run` instead of `flask run`

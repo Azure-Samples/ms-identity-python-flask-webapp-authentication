@@ -12,6 +12,7 @@ LINUX/OSX - in a terminal window, type the following:
     export FLASK_APP=authenticate_users_in_my_tenant.py
     export FLASK_ENV=development
     export FLASK_DEBUG=1
+    export FLASK_RUN_CERT=adhoc
     flask run
 
 WINDOWS - in a command window, type the following:
@@ -19,6 +20,7 @@ WINDOWS - in a command window, type the following:
     set FLASK_APP=authenticate_users_in_my_tenant.py
     set FLASK_ENV=development
     set FLASK_DEBUG=1
+    set FLASK_RUN_CERT=adhoc
     flask run
 
 You can also use "python -m flask run" instead of "flask run"
@@ -70,8 +72,8 @@ def create_app(name='authenticate_users_in_my_org', root_path=Path(__file__).par
 
 
 if __name__ == '__main__':
-    root_path=Path(__file__).parent
-    app=create_app(root_path=root_path)
+    app=create_app()
     # the param value in the following line creates an adhoc ssl cert and allows the app to serve HTTPS on loopback (127.0.0.1).
-    # Use a real certificate in production
+    # WARNING 1: Use a real certificate in production
+    # WARNING 2: Don't use app.run in production - use a production server!
     app.run(ssl_context='adhoc')
