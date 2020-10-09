@@ -4,18 +4,40 @@ from pathlib import Path
 import config as dev_config
 import os, logging
 
+"""
+Instructions for running the app:
+
+LINUX/OSX - in a terminal window, type the following:
+=======================================================
+    export FLASK_APP=authenticate_users_in_my_tenant.py
+    export FLASK_ENV=development
+    export FLASK_DEBUG=1
+    flask run
+
+WINDOWS - in a command window, type the following:
+====================================================
+    set FLASK_APP=authenticate_users_in_my_tenant.py
+    set FLASK_ENV=development
+    set FLASK_DEBUG=1
+    flask run
+
+You can also use "python -m flask run" instead of "flask run"
+"""
 
 def create_app(name='authenticate_users_in_my_org', root_path=Path(__file__).parent, config_dict=None):
     app = Flask(name, root_path=root_path)
-    app.config['ENV'] = os.environ.get('FLASK_ENV', 'development')
+    app.logger.info(f"Environment set in app.config is {app.config.get('ENV')}")
     if app.config.get('ENV') == 'production':
         app.logger.level=logging.INFO
-        # supply a production config here
-        # and remove this line:
-        raise ValueError('define a production config')
-    else:
+        app.logger.error("ARE YOU SURE?")
+        # if you are certain you want to run in prod,
+        # supply a production config and remove this line:
+        raise ValueError('This app is not meant to run in production. Run it according to instructions at top of this file.')
+    elif app.config.get('ENV') == 'development':
         app.logger.level=logging.DEBUG
         app.config.from_object(dev_config)
+    else:
+        raise ValueError('production and development are the only options')
 
     if config_dict is not None:
             app.config.from_mapping(config_dict)
