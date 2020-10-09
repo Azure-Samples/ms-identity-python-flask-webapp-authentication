@@ -173,7 +173,22 @@ Open the project in your IDE to configure the code.
 
 ## Running the sample
 
-- To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)). Run the command `python authenticate_users_in_my_tenant.py`
+- To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)). 
+- In Linux/OSX via the terminal:
+  ```Shell
+    export FLASK_APP=authenticate_users_in_my_tenant.py
+    export FLASK_ENV=development
+    export FLASK_DEBUG=1
+    flask run
+  ```
+- In Windows via PowerShell:
+  ```PowerShell
+    set FLASK_APP=authenticate_users_in_my_tenant.py
+    set FLASK_ENV=development
+    set FLASK_DEBUG=1
+    flask run
+  ```
+- Alternatively, you may use `python -m flask run` instead of `flask run`
 - Navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000) in your browser
 
 ![Experience](./ReadmeFiles/app.png)
