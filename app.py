@@ -42,7 +42,7 @@ def create_app(secure_client_credential=None):
     # tell flask to render the 401 template on not-authenticated error. it is not stricly required:
     app.register_error_handler(NotAuthenticatedError, lambda err: (render_template('auth/401.html'), err.code))
     aad_configuration = AADConfig.parse_json('aad.config.json') # parse the aad configs
-    ## app.logger.level=logging.DEBUG ## log-level debug. potentially confidential data log level
+    app.logger.level=logging.INFO # can set to DEBUG for verbose logs
     if app.config.get('ENV') == 'production':
         from werkzeug.middleware.proxy_fix import ProxyFix
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
@@ -50,7 +50,7 @@ def create_app(secure_client_credential=None):
         # 1. supply a config that sets "client_credential"=null the default config contains app secrets
         # 2. Add the secrets from a secure location, such as vault: aad_configuration.client.client_credential=secure_client_credential
         # 3. If you are sure you want to continue, remove this line:
-        # raise NotImplementedError('define a production config')
+        raise NotImplementedError('production settings')
 
     AADConfig.sanity_check_configs(aad_configuration)
     adapter = FlaskContextAdapter(app) # ms identity web for python: instantiate the flask adapter
