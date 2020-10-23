@@ -41,7 +41,7 @@ def create_app(secure_client_credential=None):
     Session(app) # init the serverside session for the app: this is requireddue to large cookie size
     # tell flask to render the 401 template on not-authenticated error. it is not stricly required:
     app.register_error_handler(NotAuthenticatedError, lambda err: (render_template('auth/401.html'), err.code))
-    aad_configuration = AADConfig.parse_json('aad.b2c.config.json') # parse the aad configs
+    aad_configuration = AADConfig.parse_json('aad.config.json') # parse the aad configs
     ## app.logger.level=logging.DEBUG ## log-level debug. potentially confidential data log level
     if app.config.get('ENV') == 'production':
         from werkzeug.middleware.proxy_fix import ProxyFix
