@@ -41,9 +41,9 @@ This sample demonstrates a Python Flask web app signing-in users in your own ten
 
 ## Scenario
 
-- This sample shows how to build a Flask Web app that uses [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) leveraging the OpenID Connect protocol to sign in users in an organization's Azure Active Directory tenant.
-- Users can only sign in with their work and school accounts in their own Azure AD tenant.
-- Once the user has signed in with Azure AD, the ID token is used by the webapp to authenticate, maintaining the user's signed-in status in a session variable.
+- This web application uses [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) (leveraging the OpenID Connect protocol) to sign in a user and obtain a JWT **ID Token** from **Azure AD**.
+- Users can only sign in with work or school accounts that are in this application's Azure AD tenant.
+- The **ID Token** contains claims that are to verify the user's identity and access rights.
 
 
 ## Contents
@@ -59,10 +59,10 @@ This sample demonstrates a Python Flask web app signing-in users in your own ten
 
 ## Prerequisites
 
-- [Python 3](https://www.python.org/downloads/)
-- A virtual environment to install packages from [requirements.txt](requirements.txt)
+- [Python 3.8](https://www.python.org/downloads/)
+- A virtual environment to install packages listed in [requirements.txt](requirements.txt)
 - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/documentation/articles/active-directory-howto-tenant/)
-- A user account in your Azure AD tenant. This sample will not work with a **personal Microsoft account**. Therefore, if you signed in to the [Azure portal](https://portal.azure.com) with a personal account and have never created a user account in your directory before, you need to do that now.
+- A user account in your own Azure AD tenant. This sample will not work with a **personal Microsoft account**. If have not yet [created a user account](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/add-users-azure-active-directory) in your AD tenant yet, you must to do it now.
 
 ## Setup
 
