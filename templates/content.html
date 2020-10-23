@@ -2,24 +2,41 @@
 
 {% block banner_text %}
     {% block title %}
-        Authentication: Use MSAL Python to sign in users in your own Azure Active Directory tenant
+        {{ config['SAMPLE_DESCRIPTION'] }}
     {% endblock %}
 {% endblock %}
 
 {% block body %}
 <div class="card">
-    <h5 class="card-header bg-primary">
+    <h5 class="card-header">
         {% block header%} {% endblock %}
     </h5>
     <div class="card-body">
-        <!-- <h5 class="card-title">
-        </h5> -->
+        <!-- <h5 class="card-title"></h5> -->
         <p class="card-text">
             {% block text %} {% endblock %}
         </p>
-        <!-- <div class="card-footer">
-        </div> -->
+        <!-- <div class="card-footer"></div> -->
     </div>
+
+    <div id="wrapper" class="alert alert-info" role="alert">
+        <!-- the MS_ID_WEB key is configurable in the config file -->
+        {% set app_cfg = config.get('MS_ID_WEB_CONFIGS') %}
+        {% set client_id = app_cfg.client.client_id %}
+        {% set aad_link="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/" ~ client_id ~ "/isMSAApp/" %}
+        <div id="left">
+            <svg class="icon-warning" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M13 17.5a1 1 0 11-2 0 1 1 0 012 0zm-.25-8.25a.75.75 0 00-1.5 0v4.5a.75.75 0 001.5 0v-4.5z"></path>
+                <path fill-rule="evenodd" d="M9.836 3.244c.963-1.665 3.365-1.665 4.328 0l8.967 15.504c.963 1.667-.24 3.752-2.165 3.752H3.034c-1.926 0-3.128-2.085-2.165-3.752L9.836 3.244zm3.03.751a1 1 0 00-1.732 0L2.168 19.499A1 1 0 003.034 21h17.932a1 1 0 00.866-1.5L12.866 3.994z"></path>
+            </svg>
+        </div>
+        <div id="right">
+            Configure your app's <em>redirect URI</em> on <a href={{ aad_link }}>Azure Portal</a> when you run locally <strong>and</strong> when you deploy on the web.
+            <br>
+            <strong>redirect_uri</strong>: {{ ms_id_url_for('aad_redirect', _external=True) }}
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 
