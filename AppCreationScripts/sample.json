@@ -10,7 +10,7 @@
     "AADApps": [
       {
         "Id": "webApp",
-        "Name": "webapp-python-flask-auth-my-tenant",
+        "Name": "python-flask-webapp-auth-my-tenant",
         "Kind": "WebApp",
         "Audience": "AzureADMyOrg",
         "PasswordCredentials": "Auto",

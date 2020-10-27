@@ -187,17 +187,17 @@ Function ConfigureApplications
     $user = Get-AzureADUser -ObjectId $creds.Account.Id
 
    # Create the webApp AAD application
-   Write-Host "Creating the AAD application (webapp-python-flask-auth-my-tenant)"
+   Write-Host "Creating the AAD application (python-flask-webapp-auth-my-tenant)"
    # Get a 2 years application key for the webApp Application
    $pw = ComputePassword
    $fromDate = [DateTime]::Now;
    $key = CreateAppKey -fromDate $fromDate -durationInYears 2 -pw $pw
    $webAppAppKey = $pw
    # create the application 
-   $webAppAadApplication = New-AzureADApplication -DisplayName "webapp-python-flask-auth-my-tenant" `
+   $webAppAadApplication = New-AzureADApplication -DisplayName "python-flask-webapp-auth-my-tenant" `
                                                   -HomePage "https://127.0.0.1:5000" `
                                                   -ReplyUrls "https://127.0.0.1:5000/auth/redirect" `
-                                                  -IdentifierUris "https://$tenantName/webapp-python-flask-auth-my-tenant" `
+                                                  -IdentifierUris "https://$tenantName/python-flask-webapp-auth-my-tenant" `
                                                   -PasswordCredentials $key `
                                                   -PublicClient $False
 
@@ -214,12 +214,12 @@ Function ConfigureApplications
    }
 
 
-   Write-Host "Done creating the webApp application (webapp-python-flask-auth-my-tenant)"
+   Write-Host "Done creating the webApp application (python-flask-webapp-auth-my-tenant)"
 
    # URL of the AAD application in the Azure portal
    # Future? $webAppPortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$webAppAadApplication.AppId+"/objectId/"+$webAppAadApplication.ObjectId+"/isMSAApp/"
    $webAppPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$webAppAadApplication.AppId+"/objectId/"+$webAppAadApplication.ObjectId+"/isMSAApp/"
-   Add-Content -Value "<tr><td>webApp</td><td>$currentAppId</td><td><a href='$webAppPortalUrl'>webapp-python-flask-auth-my-tenant</a></td></tr>" -Path createdApps.html
+   Add-Content -Value "<tr><td>webApp</td><td>$currentAppId</td><td><a href='$webAppPortalUrl'>python-flask-webapp-auth-my-tenant</a></td></tr>" -Path createdApps.html
 
    $requiredResourcesAccess = New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
 

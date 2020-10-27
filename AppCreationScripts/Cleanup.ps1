@@ -59,9 +59,9 @@ Function Cleanup
     # Removes the applications
     Write-Host "Cleaning-up applications from tenant '$tenantName'"
 
-    Write-Host "Removing 'webApp' (webapp-python-flask-auth-my-tenant) if needed"
-    Get-AzureADApplication -Filter "DisplayName eq 'webapp-python-flask-auth-my-tenant'"  | ForEach-Object {Remove-AzureADApplication -ObjectId $_.ObjectId }
-    $apps = Get-AzureADApplication -Filter "DisplayName eq 'webapp-python-flask-auth-my-tenant'"
+    Write-Host "Removing 'webApp' (python-flask-webapp-auth-my-tenant) if needed"
+    Get-AzureADApplication -Filter "DisplayName eq 'python-flask-webapp-auth-my-tenant'"  | ForEach-Object {Remove-AzureADApplication -ObjectId $_.ObjectId }
+    $apps = Get-AzureADApplication -Filter "DisplayName eq 'python-flask-webapp-auth-my-tenant'"
     if ($apps)
     {
         Remove-AzureADApplication -ObjectId $apps.ObjectId
@@ -70,10 +70,10 @@ Function Cleanup
     foreach ($app in $apps) 
     {
         Remove-AzureADApplication -ObjectId $app.ObjectId
-        Write-Host "Removed webapp-python-flask-auth-my-tenant.."
+        Write-Host "Removed python-flask-webapp-auth-my-tenant.."
     }
     # also remove service principals of this app
-    Get-AzureADServicePrincipal -filter "DisplayName eq 'webapp-python-flask-auth-my-tenant'" | ForEach-Object {Remove-AzureADServicePrincipal -ObjectId $_.Id -Confirm:$false}
+    Get-AzureADServicePrincipal -filter "DisplayName eq 'python-flask-webapp-auth-my-tenant'" | ForEach-Object {Remove-AzureADServicePrincipal -ObjectId $_.Id -Confirm:$false}
     
 }
 
