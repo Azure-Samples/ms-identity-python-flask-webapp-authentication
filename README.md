@@ -5,7 +5,8 @@ languages:
   - flask
 products:
   - azure
-  - azure-active-directory  
+  - azure-active-directory
+  - microsoft-identity-platform
 name: A Python Flask webapp for signing in users in your Azure AD tenant with the Microsoft Identity platform
 urlFragment: ms-identity-python-flask-webapp-authentication
 description: "This sample demonstrates a Python Flask webapp that signs in users in your tenant using Azure Active Directory"
