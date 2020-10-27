@@ -185,10 +185,10 @@ Open the project in your IDE to configure the code.
   ```
 - In Windows via PowerShell:
   ```PowerShell
-    set FLASK_APP=app.py
-    set FLASK_ENV=development
-    set FLASK_DEBUG=1
-    set FLASK_RUN_CERT=adhoc
+    $env:FLASK_APP="app.py"
+    $env:FLASK_ENV="development"
+    $env:FLASK_DEBUG="1"
+    $env:FLASK_RUN_CERT="adhoc"
     flask run
   ```
 - Alternatively, you may use `python -m flask run` instead of `flask run`
