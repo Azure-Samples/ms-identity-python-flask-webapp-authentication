@@ -38,8 +38,8 @@ This sample demonstrates a Python Flask web app that signs in users within your 
 
 ## Scenario
 
-1. A `confidential client` web application uses **MSAL for Python** to sign-in a user and obtains an [ID Token](https://docs.microsoft.com/azure/active-directory/develop/id-tokens) from **Azure AD**:
-2. The **ID Token** proves that the user has successfully authenticated against a **Azure AD B2C** tenant.
+1. A `confidential client` web application uses **MSAL for Python** to sign in users to their own tenant and obtains an [ID Token](https://docs.microsoft.com/azure/active-directory/develop/id-tokens) from **Azure AD**:
+2. The **ID Token** proves that a user has successfully authenticated with this tenant.
 3. The web application protects one of its routes according to user's authentication status.
 
 
