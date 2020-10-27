@@ -24,7 +24,7 @@
       {
         "App": "webApp",
         "SettingKind": "Replace",
-        "SettingFile": "\\..\\config.py",
+        "SettingFile": "\\..\\aad.config.json",
         "Mappings": [
           {
             "key": "default-value-enter-your-tenant-id-here",
