@@ -167,7 +167,7 @@ Open the project in your IDE to configure the code.
 1. Open the `aad.config.json` file
 1. Find the string `default-value-enter-your-tenant-id-here` and replace the existing value with your Azure AD tenant ID.
 1. Find the string `default-value-enter-your-client-id-here` and replace the existing value with the application ID (clientId) of the `python-flask-webapp-auth-my-tenant` application copied from the Azure portal.
-1. Find the string `default-value-enter-your-client-credential-here` and replace the existing value with the key you saved during the creation of the `python-flask-webapp-auth-my-tenant` app, in the Azure portal.
+1. Find the string `default-value-enter-your-client-secret-here` and replace the existing value with the key you saved during the creation of the `python-flask-webapp-auth-my-tenant` app, in the Azure portal.
 
 </details>
 
