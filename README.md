@@ -13,6 +13,7 @@ description: "This sample demonstrates a Python Flask webapp that signs in users
 ---
 # A Python Flask Webapp for signing in users in your organization with the Microsoft identity platform
 
+- [A Python Flask Webapp for signing in users in your organization with the Microsoft identity platform](#a-python-flask-webapp-for-signing-in-users-in-your-organization-with-the-microsoft-identity-platform)
   - [Overview](#overview)
   - [Scenario](#scenario)
   - [Contents](#contents)
@@ -21,16 +22,18 @@ description: "This sample demonstrates a Python Flask webapp that signs in users
     - [Step 1: Clone or download this repository](#step-1-clone-or-download-this-repository)
     - [Step 2: Install project dependencies](#step-2-install-project-dependencies)
   - [Register the sample application(s) with your Azure Active Directory tenant](#register-the-sample-applications-with-your-azure-active-directory-tenant)
+    - [Choose the Azure AD tenant where you want to create your applications](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
+      - [Register the webApp app (python-flask-webapp-auth-my-tenant)](#register-the-webapp-app-python-flask-webapp-auth-my-tenant)
+      - [Configure the webApp app (python-flask-webapp-auth-my-tenant) to use your app registration](#configure-the-webapp-app-python-flask-webapp-auth-my-tenant-to-use-your-app-registration)
   - [Running the sample](#running-the-sample)
   - [Explore the sample](#explore-the-sample)
   - [About the code](#about-the-code)
+    - [Under the hood](#under-the-hood)
   - [More information](#more-information)
   - [Community Help and Support](#community-help-and-support)
   - [Contributing](#contributing)
   - [Code of Conduct](#code-of-conduct)
 
-<!-- ![Build badge](https://identitydivision.visualstudio.com/_apis/public/build/definitions/a7934fdd-dcde-4492-a406-7fad6ac00e17/<BuildNumber>/badge)
-// TODO: COMMENT OUT BUILD BADGE UNTIL WE FIND A PURPOSE FOR IT-->
 ## Overview
 
 This sample demonstrates a Python Flask web app that signs in users within your own Azure Active Directory tenant using the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python).
@@ -39,10 +42,9 @@ This sample demonstrates a Python Flask web app that signs in users within your 
 
 ## Scenario
 
-1. A `confidential client` web application uses **MSAL for Python** to sign in users to their own tenant and obtains an [ID Token](https://docs.microsoft.com/azure/active-directory/develop/id-tokens) from **Azure AD**:
+1. This Web application uses the **MSAL for Python** to sign in users to their own Azure AD tenant and obtains an [ID Token](https://docs.microsoft.com/azure/active-directory/develop/id-tokens) from **Azure AD**.
 2. The **ID Token** proves that a user has successfully authenticated with this tenant.
 3. The web application protects one of its routes according to user's authentication status.
-
 
 ## Contents
 
@@ -60,7 +62,7 @@ This sample demonstrates a Python Flask web app that signs in users within your 
 - [Python 3.8](https://www.python.org/downloads/)
 - A virtual environment to install packages listed in [requirements.txt](requirements.txt)
 - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/documentation/articles/active-directory-howto-tenant/)
-- A user account in your own Azure AD tenant. This sample will not work with a **personal Microsoft account**. If have not yet [created a user account](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/add-users-azure-active-directory) in your AD tenant yet, you should do so before proceeding.
+- A user account in your own Azure AD tenant. This sample will not work with a **personal Microsoft account**. If have not yet [created a user account](https://docs.microsoft.com/azure/active-directory/fundamentals/add-users-azure-active-directory) in your AD tenant yet, you should do so before proceeding.
 
 ## Setup
 
@@ -81,13 +83,16 @@ or download and extract the repository .zip file.
 3. install project dependencies
 
 - In Linux/OSX via the terminal:
+
 ```Shell
   cd project-root-directory
   python3 -m venv venv # only required if you don't have a venv already
   source venv/bin/activate
   pip install -r requirements.txt
 ```
+
 - In Windows via PowerShell:
+
 ```PowerShell
   cd project-root-directory
   python3 -m venv venv # only required if you don't have a venv already
@@ -129,7 +134,7 @@ There is one project in this sample. To register the app on the portal, you can:
 </details>
 
 <details>
-  <summary>Expand this section if you want to manually register and configure the application in the Azure portal.</summary>
+  <summary>Expand this section if you want to manually register and configure the application in the Azure portal.</summary></details>
 
 ### Choose the Azure AD tenant where you want to create your applications
 
@@ -137,7 +142,6 @@ As a first step you'll need to:
 
 1. Sign in to the [Azure portal](https://portal.azure.com).
 1. If your account is present in more than one Azure AD tenant, select your profile at the top right corner in the menu on top of the page, and then **switch directory** to change your portal session to the desired Azure AD tenant.
-
 
 #### Register the webApp app (python-flask-webapp-auth-my-tenant)
 
@@ -172,11 +176,11 @@ Open the project in your IDE to configure the code.
 
 </details>
 
-
 ## Running the sample
 
-- To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)). 
+- To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)).
 - In Linux/OSX via the terminal:
+
   ```Shell
     export FLASK_APP=app.py
     export FLASK_ENV=development
@@ -184,7 +188,9 @@ Open the project in your IDE to configure the code.
     export FLASK_RUN_CERT=adhoc
     flask run
   ```
-- In Windows via PowerShell:
+
+- On Windows
+
   ```PowerShell
     $env:FLASK_APP="app.py"
     $env:FLASK_ENV="development"
@@ -192,6 +198,7 @@ Open the project in your IDE to configure the code.
     $env:FLASK_RUN_CERT="adhoc"
     flask run
   ```
+  
 - Alternatively, you may use `python -m flask run` instead of `flask run`
 - Navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000) in your browser
 
@@ -211,11 +218,12 @@ Open the project in your IDE to configure the code.
 
 ## About the code
 
-This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users within your Azure AD tenant. It levarages the IdentityWebPython class found in the [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-common) repository to allow for quick app setup.
+This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users within your Azure AD tenant. It also leverages the IdentityWebPython class from the [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-common) repository to allow for quick app setup.
 
 1. A configuration object is parsed from [aad.config.json](./aad.config.json)
 1. A FlaskAdapter is instantiated for interfacing with the Flask app
 1. The FlaskAdapter and an Azure AD configuration object are used to instantiate IdentityWebPython
+
     ```python
     aad_configuration = AADConfig.parse_json('aad.config.json')
     adapter = FlaskContextAdapter(app)
@@ -235,12 +243,13 @@ This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](http
 
 ### Under the hood
 
-In this sample, much of the required MSAL for Python configurations are automatically setup using utilties found in [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-common). For a more direct, hands-on demonstration of the sign-in process without this abstraction, please see the code within this [Python Webapp](https://github.com/azure-samples/ms-identity-python-webapp) sample.
+In this sample, much of the required MSAL for Python configurations are automatically setup using utilities found in [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-common). For a more direct, hands-on demonstration of the sign-in process without this abstraction, please see the code within this [Python Webapp](https://github.com/azure-samples/ms-identity-python-webapp) sample.
 
-At a minimum, following parameters need to be provided to MSAL for Python:
-  - The **Client ID** of the app
-  - The **Client Credential**, which is a requirement for Confidential Client Applications
-  - The **Azure AD Authority**, which includes the Tenant ID of the AAD application in this sample's scenario
+At a minimum, following parameters need to be provided to the MSAL for Python library:
+
+- The **Client ID** of the app
+- The **Client Credential**, which is a requirement for a Web (Confidential Client) Application.
+- The **Azure AD Authority**, which includes the Tenant ID of the AAD application in this sample's scenario.
 
 1. The first step of the sign-in process is to send a request to the `/authorize` endpoint on Azure Active Directory.
 
