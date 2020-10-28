@@ -29,6 +29,7 @@ description: "This sample demonstrates a Python Flask webapp that signs in users
   - [Explore the sample](#explore-the-sample)
   - [About the code](#about-the-code)
     - [Under the hood](#under-the-hood)
+  - [Deploy to Azure](#deploy-to-azure)
   - [More information](#more-information)
   - [Community Help and Support](#community-help-and-support)
   - [Contributing](#contributing)
