@@ -170,9 +170,9 @@ Open the project in your IDE to configure the code.
 > In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 1. Open the `aad.config.json` file
-1. Find the string `default-value-enter-your-tenant-id-here` and replace the existing value with your Azure AD tenant ID.
-1. Find the string `default-value-enter-your-client-id-here` and replace the existing value with the application ID (clientId) of the `python-flask-webapp-auth-my-tenant` application copied from the Azure portal.
-1. Find the string `default-value-enter-your-client-secret-here` and replace the existing value with the key you saved during the creation of the `python-flask-webapp-auth-my-tenant` app, in the Azure portal.
+1. Find the string `enter-your-tenant-id-here` and replace the existing value with your Azure AD tenant ID.
+1. Find the string `enter-your-client-id-here` and replace the existing value with the application ID (clientId) of the `python-flask-webapp-auth-my-tenant` application copied from the Azure portal.
+1. Find the string `enter-your-client-secret-here` and replace the existing value with the key you saved during the creation of the `python-flask-webapp-auth-my-tenant` app, in the Azure portal.
 
 </details>
 
@@ -220,6 +220,7 @@ Open the project in your IDE to configure the code.
 
 This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users within your Azure AD tenant. It levarages the IdentityWebPython class found in the [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-samples-common) repository to allow for quick app setup.
 
+In `app.py,` method def create_app(secure_client_credential=None):
 1. A configuration object is parsed from [aad.config.json](./aad.config.json)
 1. A FlaskAdapter is instantiated for interfacing with the Flask app
 1. The FlaskAdapter and an Azure AD configuration object are used to instantiate IdentityWebPython
@@ -273,6 +274,10 @@ At a minimum, following parameters need to be provided to the MSAL for Python li
     ```
 
 1. If the request is successful, MSAL for Python validates the signature and nonce of the incoming token. If these checks succeed, it returns the resulting `id_token`, `access_token` and plaintext `id_token_claims` in a dictionary. *It is the application's responsibility to store these tokens securely.*
+
+## Deploy to Azure
+
+Follow [this guide](https://github.com/Azure-Samples/ms-identity-python-flask-deployment) to deploy this app to **Azure App Service**.
 
 ## More information
 

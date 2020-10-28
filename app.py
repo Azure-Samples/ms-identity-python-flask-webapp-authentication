@@ -36,8 +36,8 @@ You can also use "python -m flask run" instead of "flask run"
 """
 
 def create_app(secure_client_credential=None):
-    app = Flask(__name__, root_path=Path(__file__).parent)
-    app.config.from_object(app_config) # Flask configuration
+    app = Flask(__name__, root_path=Path(__file__).parent) #initialize Flask app
+    app.config.from_object(app_config) # load Flask configuration file (e.g., session configs)
     Session(app) # init the serverside session for the app: this is requireddue to large cookie size
     # tell flask to render the 401 template on not-authenticated error. it is not stricly required:
     app.register_error_handler(NotAuthenticatedError, lambda err: (render_template('auth/401.html'), err.code))

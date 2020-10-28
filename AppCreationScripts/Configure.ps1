@@ -229,7 +229,7 @@ Function ConfigureApplications
    # Update config file for 'webApp'
    $configFile = $pwd.Path + "\..\aad.config.json"
    Write-Host "Updating the sample code ($configFile)"
-   $dictionary = @{ "default-value-enter-your-tenant-id-here" = $tenantId;"default-value-enter-your-client-id-here" = $webAppAadApplication.AppId;"default-value-enter-your-client-secret-here" = $webAppAppKey };
+   $dictionary = @{ "enter-your-tenant-id-here" = $tenantId;"enter-your-client-id-here" = $webAppAadApplication.AppId;"enter-your-client-secret-here" = $webAppAppKey };
    ReplaceInTextFile -configFilePath $configFile -dictionary $dictionary
   
    Add-Content -Value "</tbody></table></body></html>" -Path createdApps.html  
