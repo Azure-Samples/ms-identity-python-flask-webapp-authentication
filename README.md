@@ -231,7 +231,7 @@ This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](http
     ```
 
 - These three lines of code automatically hook up all necessary endpoints for the authentication process into your Flask app under a route prefix (`/auth` by default). For example, the redirect endpoint is found at `/auth/redirect`.
-- When a user navigates to `/auth/sign_in` and completes a sign-in attempt, the resulting identity data is put into the session, which can be accessed through the flask global g object at `g.identity_context_data`.
+- When a user navigates to `/auth/sign_in` and completes a sign-in attempt, the resulting identity data is put into the session, which can be accessed through the flask global **g** object at `g.identity_context_data`.
 - When an endpoint is decorated with `@ms_identity_web.login_required`, the application only allows requests to the endpoint from authenticated (signed-in) users. If the user is not signed-in, a `401: unathorized` error is thrown, and the browser is redirected to the 401 handler.
 
     ```python
