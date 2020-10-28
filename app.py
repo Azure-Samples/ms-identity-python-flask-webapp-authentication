@@ -17,11 +17,11 @@ Do not run using this configuration in production.
 
 LINUX/OSX - in a terminal window, type the following:
 =======================================================
-    export FLASK_APP=app.py
-    export FLASK_ENV=development
-    export FLASK_DEBUG=1
-    export FLASK_RUN_CERT=adhoc
-    flask run
+    # start from the folder in which the sample is cloned
+    cd ./ssl
+    source create-and-trust.sh
+    cd ../ # back to the folder in which the sample is cloned
+    export $(cat flask.dev.env | xargs) && flask run
 
 WINDOWS - in a powershell window, type the following:
 ====================================================
