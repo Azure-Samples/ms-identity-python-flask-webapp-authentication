@@ -253,7 +253,7 @@ At a minimum, following parameters need to be provided to the MSAL for Python li
 
 1. The first step of the sign-in process is to send a request to the `/authorize` endpoint on Azure Active Directory.
 
-1. An MSAL for Python **ConfidentialClientApplication** instance is created:
+1. An MSAL for Python **ConfidentialClientApplication** instance is created by ms_identity_web, like so:
 
     ```python
     client_instance = msal.ConfidentialClientApplication(
