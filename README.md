@@ -218,7 +218,7 @@ Open the project in your IDE to configure the code.
 
 This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users within your Azure AD tenant. It levarages the IdentityWebPython class found in the [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-samples-common) repository to allow for quick app setup.
 
-In `app.py,` method def create_app(secure_client_credential=None):
+In `app.py`'s `def create_app` method:
 1. A configuration object is parsed from [aad.config.json](./aad.config.json)
 1. A FlaskAdapter is instantiated for interfacing with the Flask app
 1. The FlaskAdapter and an Azure AD configuration object are used to instantiate IdentityWebPython
