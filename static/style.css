@@ -34,19 +34,30 @@
     align-content: center
 }
 
-.icon-warning {
-    height: 2.5em;
-    width: 2.5em;
-}
-
 #wrapper {
     display: flex;
   }
   
-  #left {
-    flex: 1;
-  }
-  
-  #right {
-    flex: 0 0 93%;
-  }
+#left {
+flex: content;
+margin-right: 0.5em;
+
+}
+
+#right {
+flex: 1;
+}
+
+#footer {
+    width: 50vw;
+    margin: auto;
+    text-align: left;
+    margin-top: 1em;
+}
+
+#check-icon {
+    height: 1.25em;
+    width: 1.25em;
+    margin: auto;
+    fill: green
+}
