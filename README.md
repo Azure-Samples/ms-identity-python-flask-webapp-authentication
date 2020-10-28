@@ -85,7 +85,7 @@ or download and extract the repository .zip file.
 - In Linux/OSX via the terminal:
 
 ```Shell
-  cd project-root-directory
+  cd project-root-directory # the folder into which you cloned the code
   python3 -m venv venv # only required if you don't have a venv already
   source venv/bin/activate
   pip install -r requirements.txt
@@ -94,7 +94,7 @@ or download and extract the repository .zip file.
 - In Windows via PowerShell:
 
 ```PowerShell
-  cd project-root-directory
+  cd project-root-directory # the folder into which you cloned the code
   python3 -m venv venv # only required if you don't have a venv already
   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
   . .\venv\Scripts\Activate.ps1
@@ -132,9 +132,6 @@ There is one project in this sample. To register the app on the portal, you can:
    > The scripts also provide a guide to automated application registration, configuration and removal which can help in your CI/CD scenarios.
 
 </details>
-
-<details>
-  <summary>Expand this section if you want to manually register and configure the application in the Azure portal.</summary></details>
 
 ### Choose the Azure AD tenant where you want to create your applications
 
@@ -179,7 +176,7 @@ Open the project in your IDE to configure the code.
 ## Running the sample
 
 - To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)).
-- In Linux/OSX via the terminal:
+- On Linux/OSX via the terminal:
 
   ```Shell
     export FLASK_APP=app.py
@@ -189,7 +186,7 @@ Open the project in your IDE to configure the code.
     flask run
   ```
 
-- On Windows
+- On Windows:
 
   ```PowerShell
     $env:FLASK_APP="app.py"
