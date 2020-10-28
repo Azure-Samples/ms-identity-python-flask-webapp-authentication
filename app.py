@@ -42,7 +42,7 @@ def create_app(secure_client_credential=None):
     app.register_error_handler(NotAuthenticatedError, lambda err: (render_template('auth/401.html'), err.code))
     aad_configuration = AADConfig.parse_json('aad.config.json') # parse the aad configs
     app.logger.level=logging.INFO # can set to DEBUG for verbose logs
-    if app.config.get('ENV') == 'production':
+    if app.config.get('ENV') == 'productions':
         from werkzeug.middleware.proxy_fix import ProxyFix
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
         # TO RUN IN PRODUCTION, READ THE FOLLOWING:
@@ -70,6 +70,6 @@ def create_app(secure_client_credential=None):
 
 if __name__ == '__main__':
     app=create_app() # this is for running flask's dev server for local testing purposes ONLY
-    app.run() # create an adhoc ssl cert for HTTPS on 127.0.0.1
+    app.run(ssl_context=('ssl/local-host.cert', 'ssl/local-host.pem')) # create an adhoc ssl cert for HTTPS on 127.0.0.1
 
 app=create_app()
