@@ -12,22 +12,20 @@
         {% block header%} {% endblock %}
     </h5>
     <div class="card-body">
-        <!-- <h5 class="card-title"></h5> -->
         <p class="card-text">
             {% block text %} {% endblock %}
         </p>
-        <!-- <div class="card-footer"></div> -->
     </div>
 
 </div>
 {% endblock %}
 
 {% block flash_messages %}
-
 {% endblock %}
 
 {% block footer %}
-{% if g.identity_context_data.authenticated == false %}
+
+    {% if g.identity_context_data.authenticated == false %}
         <div id="wrapper">
             <!-- the MS_ID_WEB key is configurable in the config file -->
             {% set app_cfg = config.get('MS_ID_WEB_CONFIGS') %}
