@@ -15,21 +15,24 @@ from ms_identity_web.configuration import AADConfig
 Instructions for running the sample app. These are dev environment instructions ONLY.
 Do not run using this configuration in production.
 
+IN OSX with system-trusted dev https certs:
+=======================================================
+    # start from the folder in which the sample code is cloned into
+    cd ./ssl
+    source generate-local-cert.sh
+    source trust-local-cert-on-macos.sh
+    cd ../ # back to folder in which the sample code is cloned into
+    source run.flask.dev.certs.sh
+
 LINUX/OSX - in a terminal window, type the following:
 =======================================================
-    # start from the folder in which the sample is cloned
-    cd ./ssl
-    source create-and-trust.sh
-    cd ../ # back to the folder in which the sample is cloned
-    export $(cat flask.dev.env | xargs) && flask run
+    # start from the folder in which the sample is cloned into
+    source run.flask.dev.sh
 
 WINDOWS - in a powershell window, type the following:
 ====================================================
-    $env:FLASK_APP="app.py"
-    $env:FLASK_ENV="development"
-    $env:FLASK_DEBUG="1"
-    $env:FLASK_RUN_CERT="adhoc"
-    flask run
+    # start from the folder in which the sample is cloned into
+    . .\\run.flask.dev.ps1
 
 You can also use "python -m flask run" instead of "flask run"
 """
@@ -70,6 +73,6 @@ def create_app(secure_client_credential=None):
 
 if __name__ == '__main__':
     app=create_app() # this is for running flask's dev server for local testing purposes ONLY
-    app.run(ssl_context=('ssl/local-host.cert', 'ssl/local-host.pem')) # create an adhoc ssl cert for HTTPS on 127.0.0.1
+    app.run(ssl_context='adhoc') # create an adhoc ssl cert for HTTPS on 127.0.0.1
 
 app=create_app()

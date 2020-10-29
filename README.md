@@ -178,26 +178,30 @@ Open the project in your IDE to configure the code.
 ## Running the sample
 
 - To run the sample, open a terminal window. Navigate to the root of the project. Be sure your virtual environment with dependencies is activated ([Prerequisites](#prerequisites)).
-- On Linux/OSX via the terminal:
+- On OSX via the terminal with trusted certs:
 
   ```Shell
-    # start from the folder in which the sample is cloned
+    # start from the folder in which the sample code is cloned into
     cd ./ssl
-    source create-and-trust.sh
-    cd ../ # back to the folder in which the sample is cloned
-    export $(cat flask.dev.env | xargs) && flask run
+    source generate-local-cert.sh
+    source trust-local-cert-on-macos.sh
+    cd ../ # back to folder in which the sample code is cloned into
+    source run.flask.dev.certs.sh
+  ```
+
+- Or in Linux/OSX via terminal with ad-hoc certs:
+  ```Shell
+    # start from the folder in which the sample is cloned into
+    source run.flask.dev.sh
   ```
 
 - On Windows:
 
   ```PowerShell
-    $env:FLASK_APP="app.py"
-    $env:FLASK_ENV="development"
-    $env:FLASK_DEBUG="1"
-    $env:FLASK_RUN_CERT="adhoc"
-    flask run
+    # start from the folder in which the sample is cloned into
+    . .\\run.flask.dev.ps1
   ```
-  
+
 - Alternatively, you may use `python -m flask run` instead of `flask run`
 - Navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000) in your browser
 
