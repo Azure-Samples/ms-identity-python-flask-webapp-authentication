@@ -12,8 +12,7 @@
 "auth_request": {
     "redirect_uri": null,
     "scopes": [],
-    "response_type": "code",
-    "prompt": "select_account"
+    "response_type": null
     },
 "flask": {
     "id_web_configs": "MS_ID_WEB_CONFIGS",
