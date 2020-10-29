@@ -12,7 +12,7 @@
 "auth_request": {
     "redirect_uri": null,
     "scopes": [],
-    "response_type": null
+    "response_type": "code"
     },
 "flask": {
     "id_web_configs": "MS_ID_WEB_CONFIGS",
