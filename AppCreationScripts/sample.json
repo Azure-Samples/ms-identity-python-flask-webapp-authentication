@@ -27,15 +27,15 @@
         "SettingFile": "\\..\\aad.config.json",
         "Mappings": [
           {
-            "key": "enter-your-tenant-id-here",
+            "key": "{enter-your-tenant-id-here}",
             "value": "$tenantId"
           },
           {
-            "key": "enter-your-client-id-here",
+            "key": "{enter-your-client-id-here}",
             "value": "webApp.AppId"
           },
           {
-            "key": "enter-your-client-secret-here",
+            "key": "{enter-your-client-secret-here}",
             "value": ".AppKey"
           }
         ]

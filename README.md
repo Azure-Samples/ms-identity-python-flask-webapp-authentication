@@ -27,14 +27,14 @@ description: "This sample demonstrates a Python Flask webapp that signs in users
       - [Configure the webApp app (python-flask-webapp-auth-my-tenant) to use your app registration](#configure-the-webapp-app-python-flask-webapp-auth-my-tenant-to-use-your-app-registration)
   - [Running the sample](#running-the-sample)
   - [Explore the sample](#explore-the-sample)
+  - [We'd love your feedback!](#wed-love-your-feedback)
   - [About the code](#about-the-code)
     - [Under the hood](#under-the-hood)
   - [Deploy to Azure](#deploy-to-azure)
-  - [We'd love your feedback!](#wed-love-your-feedback)
-  - [More information](#more-information)
   - [Community Help and Support](#community-help-and-support)
   - [Contributing](#contributing)
   - [Code of Conduct](#code-of-conduct)
+  - [More information](#more-information)
 
 ## Overview
 
@@ -96,7 +96,7 @@ or download and extract the repository .zip file.
 - In Windows via PowerShell:
 
 ```PowerShell
-  cd project-root-directory # the folder into which you cloned the code
+  cd <project-root-directory> # the folder into which you cloned the code
   python3 -m venv venv # only required if you don't have a venv already
   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
   . .\venv\Scripts\Activate.ps1
@@ -169,9 +169,9 @@ Open the project in your IDE to configure the code.
 > In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 1. Open the `aad.config.json` file
-1. Find the string `enter-your-tenant-id-here` and replace the existing value with your Azure AD tenant ID.
-1. Find the string `enter-your-client-id-here` and replace the existing value with the application ID (clientId) of the `python-flask-webapp-auth-my-tenant` application copied from the Azure portal.
-1. Find the string `enter-your-client-secret-here` and replace the existing value with the key you saved during the creation of the `python-flask-webapp-auth-my-tenant` app, in the Azure portal.
+1. Find the string `{enter-your-tenant-id-here}` and replace the existing value with your Azure AD tenant ID.
+1. Find the string `{enter-your-client-id-here}` and replace the existing value with the application ID (clientId) of the `python-flask-webapp-auth-my-tenant` application copied from the Azure portal.
+1. Find the string `{enter-your-client-secret-here}` and replace the existing value with the key you saved during the creation of the `python-flask-webapp-auth-my-tenant` app, in the Azure portal.
 
 </details>
 
@@ -190,6 +190,7 @@ Open the project in your IDE to configure the code.
   ```
 
 - Or in Linux/OSX via terminal with ad-hoc certs:
+
   ```Shell
     # start from the folder in which the sample is cloned into
     source run.flask.dev.sh
@@ -199,11 +200,13 @@ Open the project in your IDE to configure the code.
 
   ```PowerShell
     # start from the folder in which the sample is cloned into
-    . .\\run.flask.dev.ps1
+    .\\run.flask.dev.ps1
   ```
 
 - Alternatively, you may use `python -m flask run` instead of `flask run`
-- Navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000) in your browser
+- Navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000) in your browser.
+
+> You might run into an invalid certificate error on your browser as we are using `https`. If you do, you can ignore that error for running this sample's code.
 
 ![Experience](./ReadmeFiles/app.png)
 
@@ -219,14 +222,19 @@ Open the project in your IDE to configure the code.
 
 > :information_source: Did the sample not work for you as expected? Did you encounter issues trying this sample? Then please reach out to us using the [GitHub Issues](../issues) page.
 
+## We'd love your feedback!
+
+Were we successful in addressing your learning objective? Consider taking a moment to [share your experience with us](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR73pcsbpbxNJuZCMKN0lURpURjBKRzVTQ001NERDTTczMVZUWFNGMUdaMiQlQCN0PWcu).
+
 ## About the code
 
-This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users within your Azure AD tenant. It levarages the IdentityWebPython class found in the [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-samples-common) repository to allow for quick app setup.
+This sample uses the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) to sign in users within your Azure AD tenant. It leverages the IdentityWebPython class found in the [Microsoft Identity Python Samples Common](https://github.com/azure-samples/ms-identity-python-samples-common) repository to allow for quick app setup.
 
 In `app.py`'s `def create_app` method:
+
 1. A configuration object is parsed from [aad.config.json](./aad.config.json)
 1. A FlaskAdapter is instantiated for interfacing with the Flask app
-1. The FlaskAdapter and an Azure AD configuration object are used to instantiate IdentityWebPython
+1. The FlaskAdapter and an Azure AD configuration object are used to instantiate **IdentityWebPython**.
 
     ```python
     aad_configuration = AADConfig.parse_json('aad.config.json')
@@ -236,7 +244,7 @@ In `app.py`'s `def create_app` method:
 
 - These three lines of code automatically hook up all necessary endpoints for the authentication process into your Flask app under a route prefix (`/auth` by default). For example, the redirect endpoint is found at `/auth/redirect`.
 - When a user navigates to `/auth/sign_in` and completes a sign-in attempt, the resulting identity data is put into the session, which can be accessed through the flask global **g** object at `g.identity_context_data`.
-- When an endpoint is decorated with `@ms_identity_web.login_required`, the application only allows requests to the endpoint from authenticated (signed-in) users. If the user is not signed-in, a `401: unathorized` error is thrown, and the browser is redirected to the 401 handler.
+- When an endpoint is decorated with `@ms_identity_web.login_required`, the application only allows requests to the endpoint from authenticated (signed-in) users. If the user is not signed-in, a `401: unauthorized` error is thrown, and the browser is redirected to the 401 handler.
 
     ```python
     @app.route('/a_protected_route')
@@ -280,22 +288,7 @@ At a minimum, following parameters need to be provided to the MSAL for Python li
 
 ## Deploy to Azure
 
-Follow [this guide](https://github.com/Azure-Samples/ms-identity-python-flask-deployment) to deploy this app to **Azure App Service**.
-
-## We'd love your feedback!
-
-Were we successful in addressing your learning objective? Consider taking a moment to [share your experience with us](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR73pcsbpbxNJuZCMKN0lURpURjBKRzVTQ001NERDTTczMVZUWFNGMUdaMiQlQCN0PWcu).
-
-## More information
-
-- [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python)
-- [MSAL Python ReadTheDocs](https://msal-python.readthedocs.io/en/latest/)
-- [Microsoft identity platform (Azure Active Directory for developers)](https://docs.microsoft.com/azure/active-directory/develop/)
-- [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
-
-- [Understanding Azure AD application consent experiences](https://docs.microsoft.com/azure/active-directory/develop/application-consent-experience)
-- [Understand user and admin consent](https://docs.microsoft.com/azure/active-directory/develop/howto-convert-app-to-be-multi-tenant#understand-user-and-admin-consent)
-- [MSAL code samples](https://docs.microsoft.com/azure/active-directory/develop/sample-v2-code)
+Follow [this guide](https://github.com/Azure-Samples/ms-identity-python-flask-deployment) to deploy this app to the **Azure App Service**.
 
 ## Community Help and Support
 
@@ -314,3 +307,14 @@ This project welcomes contributions and suggestions. Most contributions require 
 ## Code of Conduct
 
 This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+
+## More information
+
+- [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python)
+- [MSAL Python ReadTheDocs](https://msal-python.readthedocs.io/en/latest/)
+- [Microsoft identity platform (Azure Active Directory for developers)](https://docs.microsoft.com/azure/active-directory/develop/)
+- [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
+
+- [Understanding Azure AD application consent experiences](https://docs.microsoft.com/azure/active-directory/develop/application-consent-experience)
+- [Understand user and admin consent](https://docs.microsoft.com/azure/active-directory/develop/howto-convert-app-to-be-multi-tenant#understand-user-and-admin-consent)
+- [MSAL code samples](https://docs.microsoft.com/azure/active-directory/develop/sample-v2-code)
