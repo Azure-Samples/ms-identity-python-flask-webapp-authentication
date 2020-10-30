@@ -30,7 +30,7 @@ description: "This sample demonstrates a Python Flask webapp that signs in users
   - [We'd love your feedback!](#wed-love-your-feedback)
   - [About the code](#about-the-code)
     - [Under the hood](#under-the-hood)
-  - [Deploy to Azure](#deploy-to-azure)
+  - [Next Steps or Deploy to Azure](#next-steps-or-deploy-to-azure)
   - [Community Help and Support](#community-help-and-support)
   - [Contributing](#contributing)
   - [Code of Conduct](#code-of-conduct)
@@ -286,9 +286,9 @@ At a minimum, following parameters need to be provided to the MSAL for Python li
 
 1. If the request is successful, MSAL for Python validates the signature and nonce of the incoming token. If these checks succeed, it returns the resulting `id_token`, `access_token` and plaintext `id_token_claims` in a dictionary. *It is the application's responsibility to store these tokens securely.*
 
-## Deploy to Azure
+## Next Steps or Deploy to Azure
 
-Follow [this guide](https://github.com/Azure-Samples/ms-identity-python-flask-deployment) to deploy this app to the **Azure App Service**.
+As next steps, we can now either [get an Access Token for the users we signed-in in this tutorial](https://github.com/Azure-Samples/ms-identity-python-flask-webapp-call-graph), or we can proceed [to deploy this app to the **Azure App Service**](https://github.com/Azure-Samples/ms-identity-python-flask-deployment).
 
 ## Community Help and Support
 
