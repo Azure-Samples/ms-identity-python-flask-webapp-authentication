@@ -32,7 +32,7 @@ LINUX/OSX - in a terminal window, type the following:
 WINDOWS - in a powershell window, type the following:
 ====================================================
     # start from the folder in which the sample is cloned into
-    . .\\run.flask.dev.ps1
+    . .\run.flask.dev.ps1
 
 You can also use "python -m flask run" instead of "flask run"
 """
@@ -45,7 +45,7 @@ def create_app(secure_client_credential=None):
     app.register_error_handler(NotAuthenticatedError, lambda err: (render_template('auth/401.html'), err.code))
     aad_configuration = AADConfig.parse_json('aad.config.json') # parse the aad configs
     app.logger.level=logging.INFO # can set to DEBUG for verbose logs
-    if app.config.get('ENV') == 'productions':
+    if app.config.get('ENV') == 'production':
         from werkzeug.middleware.proxy_fix import ProxyFix
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
         # TO RUN IN PRODUCTION, READ THE FOLLOWING:

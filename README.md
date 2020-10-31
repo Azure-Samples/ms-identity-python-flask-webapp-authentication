@@ -7,13 +7,13 @@ products:
   - azure
   - azure-active-directory
   - microsoft-identity-platform
-name: A Python Flask webapp for signing in users in your Azure AD tenant with the Microsoft Identity platform
+name: Enable your Python Flask webapp to sign in users to your Azure Active Directory tenant with the Microsoft identity platform
 urlFragment: ms-identity-python-flask-webapp-authentication
-description: "This sample demonstrates a Python Flask webapp that signs in users in your tenant using Azure Active Directory"
+description: "This sample demonstrates a Python Flask webapp that signs in users to your Azure AD tenant with the Microsoft identity platform"
 ---
-# A Python Flask Webapp for signing in users in your organization with the Microsoft identity platform
+# Enable your Python Flask webapp to sign in users to your Azure Active Directory tenant with the Microsoft identity platform
 
-- [A Python Flask Webapp for signing in users in your organization with the Microsoft identity platform](#a-python-flask-webapp-for-signing-in-users-in-your-organization-with-the-microsoft-identity-platform)
+- [Enable your Python Flask webapp to sign in users to your Azure Active Directory tenant with the Microsoft identity platform](#enable-your-python-flask-webapp-to-sign-in-users-to-your-azure-active-directory-tenant-with-the-microsoft-identity-platform)
   - [Overview](#overview)
   - [Scenario](#scenario)
   - [Contents](#contents)
@@ -23,8 +23,8 @@ description: "This sample demonstrates a Python Flask webapp that signs in users
     - [Step 2: Install project dependencies](#step-2-install-project-dependencies)
   - [Register the sample application(s) with your Azure Active Directory tenant](#register-the-sample-applications-with-your-azure-active-directory-tenant)
     - [Choose the Azure AD tenant where you want to create your applications](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
-      - [Register the webApp app (python-flask-webapp-auth-my-tenant)](#register-the-webapp-app-python-flask-webapp-auth-my-tenant)
-      - [Configure the webApp app (python-flask-webapp-auth-my-tenant) to use your app registration](#configure-the-webapp-app-python-flask-webapp-auth-my-tenant-to-use-your-app-registration)
+    - [Register the webapp (python-flask-webapp-auth-my-tenant)](#register-the-webapp-python-flask-webapp-auth-my-tenant)
+    - [Configure the webapp (python-flask-webapp-auth-my-tenant) to use your app registration](#configure-the-webapp-python-flask-webapp-auth-my-tenant-to-use-your-app-registration)
   - [Running the sample](#running-the-sample)
   - [Explore the sample](#explore-the-sample)
   - [We'd love your feedback!](#wed-love-your-feedback)
@@ -38,23 +38,22 @@ description: "This sample demonstrates a Python Flask webapp that signs in users
 
 ## Overview
 
-This sample demonstrates a Python Flask web app that signs in users within your own Azure Active Directory tenant using the [Microsoft Authentication Library \(MSAL\) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python).
+This sample demonstrates a Python Flask web app that signs in users to your Azure Active Directory tenant using the [Microsoft Authentication Library (MSAL) for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python).
 
-![Overview](./ReadmeFiles/sign-in.png)
+![Overview](./ReadmeFiles/topology.png)
 
 ## Scenario
 
 1. This Web application uses the **MSAL for Python** to sign in users to their own Azure AD tenant and obtains an [ID Token](https://docs.microsoft.com/azure/active-directory/develop/id-tokens) from **Azure AD**.
-2. The **ID Token** proves that a user has successfully authenticated with this tenant.
-3. The web application protects one of its routes according to user's authentication status.
+1. The **ID Token** proves that a user has successfully authenticated with this tenant.
+1. The web application protects one of its routes according to user's authentication status.
 
 ## Contents
 
 | File/folder       | Description                                |
 |-------------------|--------------------------------------------|
-|`AppCreationScripts/`| Folder contains scripts to automatically configure Azure AD app registrations|
-|`app.py` | The sample app code.                       |
-|`auth_endpoints.py`| The auth related endpoints code.           |
+|`AppCreationScripts/`| Scripts to automatically configure Azure AD app registrations.|
+|`app.py`           | The sample app code.                       |
 |`CHANGELOG.md`     | List of changes to the sample.             |
 |`CONTRIBUTING.md`  | Guidelines for contributing to the sample. |
 |`LICENSE`          | The license for the sample.                |
@@ -87,7 +86,7 @@ or download and extract the repository .zip file.
 - In Linux/OSX via the terminal:
 
 ```Shell
-  cd project-root-directory # the folder into which you cloned the code
+  cd <project-root-directory> # the folder into which you cloned the code
   python3 -m venv venv # only required if you don't have a venv already
   source venv/bin/activate
   pip install -r requirements.txt
@@ -142,7 +141,7 @@ As a first step you'll need to:
 1. Sign in to the [Azure portal](https://portal.azure.com).
 1. If your account is present in more than one Azure AD tenant, select your profile at the top right corner in the menu on top of the page, and then **switch directory** to change your portal session to the desired Azure AD tenant.
 
-#### Register the webApp app (python-flask-webapp-auth-my-tenant)
+### Register the webapp (python-flask-webapp-auth-my-tenant)
 
 1. Navigate to the Microsoft identity platform for developers [App registrations](https://go.microsoft.com/fwlink/?linkid=2083908) page.
 1. Select **New registration**.
@@ -162,7 +161,7 @@ As a first step you'll need to:
    - The generated key value will be displayed when you click the **Add** button. Copy the generated value for use in the steps later.
    - You'll need this key later in your code's configuration files. This key value will not be displayed again, and is not retrievable by any other means, so make sure to note it from the Azure portal before navigating to any other screen or blade.
 
-#### Configure the webApp app (python-flask-webapp-auth-my-tenant) to use your app registration
+### Configure the webapp (python-flask-webapp-auth-my-tenant) to use your app registration
 
 Open the project in your IDE to configure the code.
 
@@ -200,13 +199,13 @@ Open the project in your IDE to configure the code.
 
   ```PowerShell
     # start from the folder in which the sample is cloned into
-    .\\run.flask.dev.ps1
+    . .\run.flask.dev.ps1
   ```
 
 - Alternatively, you may use `python -m flask run` instead of `flask run`
 - Navigate to [https://127.0.0.1:5000](https://127.0.0.1:5000) in your browser.
 
-> You might run into an invalid certificate error on your browser as we are using `https`. If you do, you can ignore that error for running this sample's code.
+> You might run into an invalid certificate error on your browser as we are using self-signed certificates for `https`. If you do, you can ignore that error while running this sample locally.
 
 ![Experience](./ReadmeFiles/app.png)
 
@@ -216,9 +215,9 @@ Open the project in your IDE to configure the code.
 - Click the context-sensitive button at the top right (it will read `Sign In` on first run)
 - Follow the instructions on the next page to sign in with an account in the Azure AD tenant.
 - Note the context-sensitive button now says `Sign out` and displays your username to its left.
-- The middle of the screen now has an option to click for ID Token Details: click it to see some of the ID token's decoded claims.
+- The middle of the screen now has an option to click for **ID Token Details**: click it to see some of the ID token's decoded claims.
 - You can also use the button on the top right to sign out.
-- After signing out, click the link to the [token details page](https://127.0.0.1:5000/auth/token_details) to observe that the app displays a `401: unauthorized` error instead of the ID token claims when the user is not authorized.
+- After signing out, click the link to `ID Token Details` to observe that the app displays a `401: unauthorized` error instead of the ID token claims when the user is not authorized.
 
 > :information_source: Did the sample not work for you as expected? Did you encounter issues trying this sample? Then please reach out to us using the [GitHub Issues](../issues) page.
 
