@@ -46,13 +46,9 @@ def create_app(secure_client_credential=None):
     aad_configuration = AADConfig.parse_json('aad.config.json') # parse the aad configs
     app.logger.level=logging.INFO # can set to DEBUG for verbose logs
     if app.config.get('ENV') == 'production':
+        # The following is required to run on Azure App Service or any other host with reverse proxy:
         from werkzeug.middleware.proxy_fix import ProxyFix
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
-        # TO RUN IN PRODUCTION, READ THE FOLLOWING:
-        # 1. supply a config that sets "client_credential"=null the default config contains app secrets
-        # 2. Add the secrets from a secure location, such as vault: aad_configuration.client.client_credential=secure_client_credential
-        # 3. If you are sure you want to continue, remove this line:
-        raise NotImplementedError('production settings')
 
     AADConfig.sanity_check_configs(aad_configuration)
     adapter = FlaskContextAdapter(app) # ms identity web for python: instantiate the flask adapter
