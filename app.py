@@ -49,6 +49,8 @@ def create_app(secure_client_credential=None):
         # The following is required to run on Azure App Service or any other host with reverse proxy:
         from werkzeug.middleware.proxy_fix import ProxyFix
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+        # Use client credential from outside the config file, if available.
+        if secure_client_credential: aad_configuration.client.client_credential = secure_client_credential
 
     AADConfig.sanity_check_configs(aad_configuration)
     adapter = FlaskContextAdapter(app) # ms identity web for python: instantiate the flask adapter
