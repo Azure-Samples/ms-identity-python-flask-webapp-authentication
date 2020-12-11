@@ -1,10 +1,7 @@
-import os, logging
-
-from functools import wraps
-from flask import Flask, Blueprint, session, redirect, url_for, current_app, render_template, request
+import logging
+from flask import Flask, current_app, render_template, redirect, url_for, request
 from flask_session import Session
 from pathlib import Path
-
 import app_config
 from ms_identity_web import IdentityWebPython
 from ms_identity_web.adapters import FlaskContextAdapter
