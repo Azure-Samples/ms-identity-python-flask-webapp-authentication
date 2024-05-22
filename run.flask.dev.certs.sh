@@ -1,1 +1,0 @@
-FLASK_APP=app.py FLASK_ENV=development FLASK_DEBUG=1 FLASK_RUN_CERT=ssl/local-host.cert FLASK_RUN_KEY=ssl/local-host.pem flask run
