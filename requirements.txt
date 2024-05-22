@@ -1,5 +1,0 @@
-Flask>=1,<2
-werkzeug>=1,<2
-flask-session~=0.3.2
-git+https://github.com/azure-samples/ms-identity-python-samples-common
-pyopenssl>19,<20
